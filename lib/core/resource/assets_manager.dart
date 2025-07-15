@@ -18,4 +18,6 @@ class ImagesManager {
   static const String upsideDownCloud = "assets/images/upsideDownCloud.png";
   static const String waveContainer = "assets/images/waveContainer.png";
   static  String tower = "assets/images/Tower.png";
+  static  String splashPage = "assets/images/splash screen.png";
+  static  String signInPage = "assets/images/signIn.jpeg";
 }
