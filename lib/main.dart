@@ -1,18 +1,57 @@
 import 'package:flutter/material.dart';
-import 'package:teacher/features/tasmi3/presentaition/view/tasmi3.dart';
+import 'package:flutter_localization/flutter_localization.dart';
+import 'package:teacher/core/core_page.dart';
+import 'package:teacher/features/tasmi3/presentation/view/tasmi3.dart';
+mixin AppLocale {
+  static const String title = 'title';
 
-void main() {
+  static const Map<String, dynamic> Ar = {title: 'Localization'};
+  
+}
+void main()async {
+   WidgetsFlutterBinding.ensureInitialized();
+    await FlutterLocalization.instance.ensureInitialized();
   runApp(const MyApp());
 }
-
-class MyApp extends StatelessWidget {
+ final FlutterLocalization _localization = FlutterLocalization.instance;
+class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
+  @override
+  State<MyApp> createState() => _MyAppState();
 
+  
+}
+
+  
+class _MyAppState extends State<MyApp> {
+
+void initState() {
+    _localization.init(
+      mapLocales: [
+        const MapLocale('ar', AppLocale.Ar),
+       
+        
+      ],
+      initLanguageCode: 'ar',
+    );
+    _localization.onTranslatedLanguage = _onTranslatedLanguage;
+    super.initState();
+  }
+
+  void _onTranslatedLanguage(Locale? locale) {
+    setState(() {});
+}
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      home: tasmi3UI(),
+      
+    
+
+  supportedLocales: _localization.supportedLocales,
+      localizationsDelegates: _localization.localizationsDelegates,
+   
+      home: CoreUi(),
        );
   }
 }

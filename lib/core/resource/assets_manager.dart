@@ -5,7 +5,7 @@ class ImagesManager {
   static const String ellipse19 = "assets/images/Ellipse 19.png";
   static const String lamp = "assets/images/lamp.png";
   static const String logoMigras = "assets/images/logo_migras.png";
-  static const String moon = "assets/images/moon.png";
+  static const String moon = "assets/images/moon3.png";
   static const String mouse = "assets/images/mouse.png";
   static const String noWifi = "assets/images/noWifi.png";
   static const String onelineDotted = "assets/images/onelineDotted.png";
@@ -18,4 +18,5 @@ class ImagesManager {
   static const String upsideDownCloud = "assets/images/upsideDownCloud.png";
   static const String waveContainer = "assets/images/waveContainer.png";
   static  String tower = "assets/images/Tower.png";
+  static String listengcute_image="assets/images/cuteListening.png";
 }

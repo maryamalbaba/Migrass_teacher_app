@@ -1,0 +1,3 @@
+class GetAllTasmi3GroupUseCase{
+  
+}
