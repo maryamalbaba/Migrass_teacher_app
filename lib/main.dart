@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:teacher/core/config/sharedPreferences_manager.dart';
 import 'package:teacher/core/core_page.dart';
+import 'package:teacher/core/enums/shared_preferences_keys.dart';
+import 'package:teacher/core/resource/navigator_manager.dart';
+import 'package:teacher/core/resource/route.dart';
+import 'package:teacher/core/resource/route_const.dart';
+import 'package:teacher/features/splash/view/pages/splash_page.dart';
 import 'package:teacher/features/tasmi3/presentation/view/tasmi3.dart';
 mixin AppLocale {
   static const String title = 'title';
@@ -9,8 +15,11 @@ mixin AppLocale {
   
 }
 void main()async {
+  
    WidgetsFlutterBinding.ensureInitialized();
+   await SharedPreferencesManger.instance.initSharedPreferences();
     await FlutterLocalization.instance.ensureInitialized();
+   //  await SharedPreferencesManger.instance.remove(SharedPreferencesKeys.token);
   runApp(const MyApp());
 }
  final FlutterLocalization _localization = FlutterLocalization.instance;
@@ -46,12 +55,15 @@ void initState() {
   Widget build(BuildContext context) {
     return MaterialApp(
       
-    
+     initialRoute: RouteConst.splash,
+      navigatorKey: AppNavigator.instance.navigationKey,
+      onGenerateRoute: AppRoutes.generateRoute,
+
 
   supportedLocales: _localization.supportedLocales,
       localizationsDelegates: _localization.localizationsDelegates,
    
-      home: CoreUi(),
+      home: SplashPage(),
        );
   }
 }

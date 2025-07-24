@@ -1,10 +1,10 @@
 class ImagesManager {
   static const String dotted = "assets/images/dotted.png";
   static const String dottedPing = "assets/images/dottedPing.png";
-  static const String downCloud = "assets/images/downCloud.png";
+  //static const String downCloud = "assets/images/downCloud.png";
   static const String ellipse19 = "assets/images/Ellipse 19.png";
   static const String lamp = "assets/images/lamp.png";
-  static const String logoMigras = "assets/images/logo_migras.png";
+  static const String logoMigras = "assets/images/logo_migrass.png";
   static const String moon = "assets/images/moon3.png";
   static const String mouse = "assets/images/mouse.png";
   static const String noWifi = "assets/images/noWifi.png";
@@ -15,8 +15,13 @@ class ImagesManager {
   static const String rocket = "assets/images/rocket.png";
   static const String twolineDotted = "assets/images/twolineDotted.png";
   static const String upWave = "assets/images/up_wave.png";
-  static const String upsideDownCloud = "assets/images/upsideDownCloud.png";
+  static const String upsideDownCloud = "assets/images/upSideDownCloude.png";
   static const String waveContainer = "assets/images/waveContainer.png";
   static  String tower = "assets/images/Tower.png";
   static String listengcute_image="assets/images/cuteListening.png";
+
+  static  String signInPage = "assets/images/signIn.jpeg";
+ static  String downCloude = "assets/images/downColude.png";
+ static  String logoWithsentance = "assets/images/logoWithsentance.png";
+  
 }

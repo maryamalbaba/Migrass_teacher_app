@@ -1,4 +1,4 @@
 class ApiManager {
-String login="/api/auth/login";
-
+ static String baseUrl = 'http://localhost:4000/api/';
+ static String login = "auth/login";
 }

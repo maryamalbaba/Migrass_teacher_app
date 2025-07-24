@@ -1,11 +1,13 @@
 import 'dart:ui';
 
 const Color black          =       Color(0xFF000000);          // أسود
+const Color offWhite          =       Color(0xFFD9D9D9);          // أسود
+const Color green          =       Color(0xFFD9D9D9);          // أسود
 const Color lightGray      =       Color(0xFFD9D9D9);     // رمادي فاتح
 const Color white          =       Color(0xFFFFFFFF);          // أبيض
 const Color darkPurple     =       Color(0xFF716F76);     // رمادي غامق
 const Color lightGreen1    =       Color(0xFFAFD1BC);    // أخضر فاتح 1
-const Color green          =       Color(0xFF6BA28E);           // أخضر
+const Color greenLight         =       Color(0xFF6BA28E);           // أخضر
 const Color lightGreen2    =       Color(0xFFD6E6DB);    // أخضر فاتح 2
 const Color greenGray      =       Color(0xFF97BAA4);       // أخضر رمادي
 const Color darkGreen      =       Color(0xFF6E9479);       // أخضر غامق
@@ -20,3 +22,4 @@ const Color lightRed        =       Color(0xFFECAEAE);       // احمر فات�
 const Color veryLightGreen2 = Color(0xFFDAE7DA);  // أخضر رمادي فاتح جداً
 const Color softYellow      = Color(0xFFFFF7B8); 
 const Color sofgreen      = Color(0xFFA4DDBA); 
+const  Color backgroundGreen=Color(0xffB1E2BF);
