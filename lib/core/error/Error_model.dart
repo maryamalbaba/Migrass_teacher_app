@@ -5,3 +5,14 @@ class ErrorModel {
     required this.message,
   });
 }
+
+
+
+
+class EmptyCachedError {
+  String massage;
+  EmptyCachedError({
+    required this.massage,
+  });
+}
+

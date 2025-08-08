@@ -1,1 +1,0 @@
-class LocalTasmi3groupDataSource {}

@@ -16,23 +16,23 @@ class CoreUi extends StatefulWidget {
 }
 
 class _CoreUiState extends State<CoreUi> {
-  List<Widget> page = [Homepage(), RecordsUi(), tasmi3UI()];
+  List<Widget> page = [ RecordsUi(),tasmi3UI(),Homepage(), ];
 
-  int index = 0;
+  int index = 2;
 
   List<String> IconList = [];
 
   final List<TabItem> items = [
-    TabItem( icon: MyFlutterApp.home,
+    TabItem( icon: MyFlutterApp.mic_circled,
         
         // SvgPicture.asset(
         //   IconImageManager.home_svg,
         //   width: 24,
         //   height: 24,
         // ),
-        title: 'الرئيسية'),
-    TabItem(icon: MyFlutterApp.icon_report, title: 'بحث'),
-    TabItem(icon: MyFlutterApp.mic_circled, title: 'تسميعات'),
+        title: 'تسجيلات'),
+    TabItem(icon: MyFlutterApp.icon_report, title: 'تسميعات'),
+    TabItem(icon: MyFlutterApp.home, title: 'الرئيسية'),
   ];
 
   @override

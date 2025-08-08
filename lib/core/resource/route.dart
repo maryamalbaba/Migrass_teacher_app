@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:teacher/core/core_page.dart';
 import 'package:teacher/core/resource/route_const.dart';
 import 'package:teacher/features/auth/view/pages/signin_page.dart';
+import 'package:teacher/features/get_session/view/get_tasmi3_session_ui.dart';
 import 'package:teacher/features/tasmi3/presentation/view/tasmi3.dart';
 
 import '../../features/splash/view/pages/splash_page.dart';
@@ -29,9 +30,11 @@ class AppRoutes {
       case RouteConst.login:
         return MaterialPageRoute(builder: (_) => const SignInPage());
       case RouteConst.home:
-        return MaterialPageRoute(builder: (_) => const tasmi3UI());
+        return MaterialPageRoute(builder: (_) =>  tasmi3UI());
         case RouteConst.CoreUi:
         return MaterialPageRoute(builder: (_)=>  CoreUi());
+        case  RouteConst.Tasmi3SessionUi:
+        return MaterialPageRoute(builder: (_)=>Tasmi3SessionUi() );
       default:
         return _errorRoute();
     }

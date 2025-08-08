@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localization/flutter_localization.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:teacher/core/config/sharedPreferences_manager.dart';
 import 'package:teacher/core/core_page.dart';
 import 'package:teacher/core/enums/shared_preferences_keys.dart';
 import 'package:teacher/core/resource/navigator_manager.dart';
 import 'package:teacher/core/resource/route.dart';
 import 'package:teacher/core/resource/route_const.dart';
+import 'package:teacher/features/get_session/view/get_tasmi3_session_ui.dart';
 import 'package:teacher/features/splash/view/pages/splash_page.dart';
 import 'package:teacher/features/tasmi3/presentation/view/tasmi3.dart';
 mixin AppLocale {
@@ -19,7 +21,7 @@ void main()async {
    WidgetsFlutterBinding.ensureInitialized();
    await SharedPreferencesManger.instance.initSharedPreferences();
     await FlutterLocalization.instance.ensureInitialized();
-   //  await SharedPreferencesManger.instance.remove(SharedPreferencesKeys.token);
+  // await SharedPreferencesManger.instance.remove(SharedPreferencesKeys.token);
   runApp(const MyApp());
 }
  final FlutterLocalization _localization = FlutterLocalization.instance;
@@ -53,17 +55,22 @@ void initState() {
 }
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return ScreenUtilInit(
+         designSize: const Size(375, 812),  // عدلها حسب التصميم اللي تستخدمه
+    minTextAdapt: true,
+    splitScreenMode: true,
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+       initialRoute: RouteConst.splash,
+        navigatorKey: AppNavigator.instance.navigationKey,
+        onGenerateRoute: AppRoutes.generateRoute,
       
-     initialRoute: RouteConst.splash,
-      navigatorKey: AppNavigator.instance.navigationKey,
-      onGenerateRoute: AppRoutes.generateRoute,
-
-
-  supportedLocales: _localization.supportedLocales,
-      localizationsDelegates: _localization.localizationsDelegates,
-   
-      home: SplashPage(),
-       );
+      
+        supportedLocales: _localization.supportedLocales,
+        localizationsDelegates: _localization.localizationsDelegates,
+         
+      //  home: Tasmi3SessionUi(),
+         ),
+    );
   }
 }

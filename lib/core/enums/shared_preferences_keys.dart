@@ -12,6 +12,7 @@ enum SharedPreferencesKeys {
   currency,
   phoneNumber,
   gender,
+  tasmi3Circle
 }
 
 extension LocaleKeysExtension on SharedPreferencesKeys {
@@ -44,6 +45,8 @@ extension LocaleKeysExtension on SharedPreferencesKeys {
         return 'first_name'; 
       case SharedPreferencesKeys.userName:
         return 'user_name'; 
+        case SharedPreferencesKeys.tasmi3Circle:
+        return "tasmi3Circle";
       default:
         throw Exception('Unknown LocaleKey');
     }

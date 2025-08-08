@@ -17,11 +17,11 @@ class ImagesManager {
   static const String upWave = "assets/images/up_wave.png";
   static const String upsideDownCloud = "assets/images/upSideDownCloude.png";
   static const String waveContainer = "assets/images/waveContainer.png";
-  static  String tower = "assets/images/Tower.png";
-  static String listengcute_image="assets/images/cuteListening.png";
+  static String tower = "assets/images/Tower.png";
+  static String listengcute_image = "assets/images/cuteListening.png";
 
-  static  String signInPage = "assets/images/signIn.jpeg";
- static  String downCloude = "assets/images/downColude.png";
- static  String logoWithsentance = "assets/images/logoWithsentance.png";
-  
+  static String signInPage = "assets/images/signIn.jpeg";
+  static String downCloude = "assets/images/downColude.png";
+  static String logoWithsentance = "assets/images/logoWithsentance.png";
+  static String greenBcak = "assets/images/greenBcak.png";
 }

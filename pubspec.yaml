@@ -49,6 +49,7 @@ dependencies:
   pretty_dio_logger: ^1.4.0
   flutter_bloc: ^9.1.1
   equatable: ^2.0.7
+  flutter_screenutil: ^5.9.3
 
 dev_dependencies:
   flutter_test:

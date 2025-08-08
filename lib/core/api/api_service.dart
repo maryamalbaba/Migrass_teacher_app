@@ -110,6 +110,7 @@ class ApiService {
           ? Left(apiResponse.message)
           : Right(apiResponse.data);
     } catch (e) {
+      print("حدث خطأ غير متوقع، يرجى المحاولة لاحقًا.");
       return Left("حدث خطأ غير متوقع، يرجى المحاولة لاحقًا.");
     }
   }
