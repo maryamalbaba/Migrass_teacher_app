@@ -7,6 +7,7 @@ import 'package:teacher/core/network/network.dart';
 import 'package:teacher/core/resource/assets_manager.dart';
 import 'package:teacher/core/resource/colors_manager.dart';
 import 'package:teacher/core/widgets/green_container.dart';
+import 'package:teacher/core/widgets/moving_container.dart';
 import 'package:teacher/features/tasmi3/data/data_sourse/Local1/local_tasmi3group.dart';
 import 'package:teacher/features/tasmi3/data/data_sourse/remote/remote_tasmi3group.dart';
 import 'package:teacher/features/tasmi3/data/repository/repo_impl.dart';
@@ -83,14 +84,14 @@ class _tasmi3UIState extends State<tasmi3UI> {
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
-                                ElevatedButton(
-                                  onPressed: () {
+                                MovingContainer(
+                                  ontap: () {
                                     setState(() {
                                       if (currentIndex < succeslist.length - 1)
                                         currentIndex++;
                                     });
                                   },
-                                  child: Text("➡"),
+                                  iconData: Icon(color: white, Icons.arrow_back)
                                 ),
                                 SizedBox(width: 8),
                                 Flexible(
@@ -102,13 +103,13 @@ class _tasmi3UIState extends State<tasmi3UI> {
                                   ),
                                 ),
                                 SizedBox(width: 8),
-                                ElevatedButton(
-                                  onPressed: () {
+                               MovingContainer(
+                                 ontap: () {
                                     setState(() {
                                       if (currentIndex > 0) currentIndex--;
                                     });
                                   },
-                                  child: Text("⬅"),
+                                 iconData: Icon(color: white, Icons.arrow_forward)
                                 ),
                               ],
                             ),
