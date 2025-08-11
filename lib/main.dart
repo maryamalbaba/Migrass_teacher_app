@@ -7,42 +7,40 @@ import 'package:teacher/core/enums/shared_preferences_keys.dart';
 import 'package:teacher/core/resource/navigator_manager.dart';
 import 'package:teacher/core/resource/route.dart';
 import 'package:teacher/core/resource/route_const.dart';
-import 'package:teacher/features/get_session/view/get_tasmi3_session_ui.dart';
-import 'package:teacher/features/splash/view/pages/splash_page.dart';
-import 'package:teacher/features/tasmi3/presentation/view/tasmi3.dart';
+
+
+import 'core/resource/services_locator.dart';
+
 mixin AppLocale {
   static const String title = 'title';
 
   static const Map<String, dynamic> Ar = {title: 'Localization'};
-  
 }
-void main()async {
-  
-   WidgetsFlutterBinding.ensureInitialized();
-   await SharedPreferencesManger.instance.initSharedPreferences();
-    await FlutterLocalization.instance.ensureInitialized();
+
+void main() async {
+  ServicesLocator().init();
+
+  WidgetsFlutterBinding.ensureInitialized();
+  await SharedPreferencesManger.instance.initSharedPreferences();
+  await FlutterLocalization.instance.ensureInitialized();
   // await SharedPreferencesManger.instance.remove(SharedPreferencesKeys.token);
   runApp(const MyApp());
 }
- final FlutterLocalization _localization = FlutterLocalization.instance;
+
+final FlutterLocalization _localization = FlutterLocalization.instance;
+
 class MyApp extends StatefulWidget {
   const MyApp({super.key});
 
   @override
   State<MyApp> createState() => _MyAppState();
-
-  
 }
 
-  
 class _MyAppState extends State<MyApp> {
-
-void initState() {
+  void initState() {
     _localization.init(
       mapLocales: [
         const MapLocale('ar', AppLocale.Ar),
-       
-        
       ],
       initLanguageCode: 'ar',
     );
@@ -52,25 +50,25 @@ void initState() {
 
   void _onTranslatedLanguage(Locale? locale) {
     setState(() {});
-}
+  }
+
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-         designSize: const Size(375, 812),  // عدلها حسب التصميم اللي تستخدمه
-    minTextAdapt: true,
-    splitScreenMode: true,
+      designSize: const Size(375, 812), // عدلها حسب التصميم اللي تستخدمه
+      minTextAdapt: true,
+      splitScreenMode: true,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-       initialRoute: RouteConst.splash,
+        initialRoute: RouteConst.splash,
         navigatorKey: AppNavigator.instance.navigationKey,
         onGenerateRoute: AppRoutes.generateRoute,
-      
-      
+
         supportedLocales: _localization.supportedLocales,
         localizationsDelegates: _localization.localizationsDelegates,
-         
-      //  home: Tasmi3SessionUi(),
-         ),
+
+        //  home: Tasmi3SessionUi(),
+      ),
     );
   }
 }

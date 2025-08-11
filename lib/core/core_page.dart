@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:teacher/core/resource/colors_manager.dart';
 import 'package:teacher/core/resource/icon_image_manager.dart';
-import 'package:teacher/features/lessons/presentation/homePage.dart';
+import 'package:teacher/features/lessons/presentation/pages/homePage.dart';
 import 'package:teacher/features/records/presentation/recordsUI.dart';
 import 'package:teacher/features/tasmi3/presentation/view/tasmi3.dart';
 import 'package:teacher/my_flutter_app_icons.dart';

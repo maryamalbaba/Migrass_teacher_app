@@ -4,13 +4,10 @@ import 'package:teacher/core/core_page.dart';
 import 'package:teacher/core/resource/route_const.dart';
 import 'package:teacher/features/auth/view/pages/signin_page.dart';
 import 'package:teacher/features/get_session/view/get_tasmi3_session_ui.dart';
+import 'package:teacher/features/session_lesson/view/pages/session_page.dart';
 import 'package:teacher/features/tasmi3/presentation/view/tasmi3.dart';
 
 import '../../features/splash/view/pages/splash_page.dart';
-
-
-
-
 
 class AppRoutes {
   static AppRoutes? _instance;
@@ -30,11 +27,17 @@ class AppRoutes {
       case RouteConst.login:
         return MaterialPageRoute(builder: (_) => const SignInPage());
       case RouteConst.home:
-        return MaterialPageRoute(builder: (_) =>  tasmi3UI());
-        case RouteConst.CoreUi:
-        return MaterialPageRoute(builder: (_)=>  CoreUi());
-        case  RouteConst.Tasmi3SessionUi:
-        return MaterialPageRoute(builder: (_)=>Tasmi3SessionUi() );
+        return MaterialPageRoute(builder: (_) => tasmi3UI());
+
+      case RouteConst.session:
+        return MaterialPageRoute(
+            builder: (_) => SessionPage(
+                  circleId: args as int,
+                ));
+      case RouteConst.CoreUi:
+        return MaterialPageRoute(builder: (_) => CoreUi());
+      case RouteConst.Tasmi3SessionUi:
+        return MaterialPageRoute(builder: (_) => Tasmi3SessionUi());
       default:
         return _errorRoute();
     }
@@ -101,7 +104,7 @@ class NoInternetPage extends StatelessWidget {
                   backgroundColor: Colors.white,
                   foregroundColor: const Color(0xFF201D54),
                   padding:
-                  const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
+                      const EdgeInsets.symmetric(horizontal: 30, vertical: 12),
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),

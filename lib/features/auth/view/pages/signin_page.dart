@@ -91,6 +91,7 @@ class _SignInPageState extends State<SignInPage> {
     );
   }
 
+
   ElevatedButton buildElevatedButton(BuildContext context, AuthState state) {
     return ElevatedButton(
                     onPressed: () {
@@ -143,4 +144,5 @@ class _SignInPageState extends State<SignInPage> {
       ),
     );
   }
+
 }

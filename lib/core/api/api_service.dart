@@ -58,33 +58,6 @@ class ApiService {
 
   Future<bool> _checkInternetConnection() async => true;
 
-  Future<Either<String?, dynamic>> makeRequestMultiPart({
-    required ApiMethod method,
-    required String endPoint,
-    dio.FormData? formData,
-    Map<String, dynamic>? headers,
-    bool showSnackBarOnError = true,
-  }) async {
-    bool isConnected = await _checkInternetConnection();
-    if (!isConnected) {
-      return const Left("الرجاء التحقق من اتصالك بالإنترنت.");
-    }
-
-    _dio.options = _dio.options.copyWith(method: method.value);
-    _dio.options.headers = getHeaders;
-    _dio.options.headers.addAll({'Content-Type': "multipart/form-data"});
-    if (headers != null) _dio.options.headers.addAll(headers);
-
-    try {
-      final response = await _dio.request(endPoint, data: formData);
-      final apiResponse = handleApiError(response, showSnackBarOnError);
-      return apiResponse.status == ApiResponseStatus.failure
-          ? Left(apiResponse.message)
-          : Right(apiResponse.data);
-    } catch (e) {
-      return Left("حدث خطأ غير متوقع، يرجى المحاولة لاحقًا.");
-    }
-  }
 
   Future<Either<String?, dynamic>> makeRequest({
     required ApiMethod method,
