@@ -22,7 +22,7 @@ void main()async {
    WidgetsFlutterBinding.ensureInitialized();
    await SharedPreferencesManger.instance.initSharedPreferences();
     await FlutterLocalization.instance.ensureInitialized();
-   await SharedPreferencesManger.instance.remove(SharedPreferencesKeys.token);
+  // await SharedPreferencesManger.instance.remove(SharedPreferencesKeys.token);
   runApp(const MyApp());
 }
  final FlutterLocalization _localization = FlutterLocalization.instance;
