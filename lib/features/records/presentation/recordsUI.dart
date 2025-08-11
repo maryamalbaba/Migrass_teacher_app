@@ -14,75 +14,118 @@ class RecordsUi extends StatelessWidget {
       child: Column(
         children: [
           Container(
-             width: double.infinity,
-              height: MediaQuery.of(context).size.height * 0.34,
+            width: double.infinity,
+            height: MediaQuery.of(context).size.height * 0.34,
             decoration: BoxDecoration(
-                borderRadius:
-                    BorderRadius.only(bottomLeft: Radius.circular(20),
-                    bottomRight: Radius.circular(20)
-                    
-                    ),
-                    image: DecorationImage(image: AssetImage("assets/images/cute.png"),
-                    
-                    fit: BoxFit.fill,
-                    )
-                    ),
-           
+              borderRadius: const BorderRadius.only(
+                bottomLeft: Radius.circular(20),
+                bottomRight: Radius.circular(20),
+              ),
+              image: const DecorationImage(
+                image: AssetImage("assets/images/cute.png"),
+                fit: BoxFit.fill,
+              ),
+            ),
           ),
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: Theme(
               data: Theme.of(context).copyWith(
-                dividerColor: Colors.transparent, // يخفي الخط الفاصل التلقائي
-                splashColor: Colors.transparent, // يخفي تأثير الضغط
+                dividerColor: Colors.transparent, //  بيخفي الخط الفاصل التلقائي لمشا ما يطلعلي معلم
+                splashColor: Colors.transparent, //  بيخفي تأثير الضغط
                 highlightColor: Colors.transparent,
               ),
-              child: ExpansionTile(
-                title: Text("مريم البابا"),
-                expandedAlignment: Alignment.centerLeft,
-                children: [
-                  Row(
-                    children: [
-                      Slider(value: 2, min: 0, max: 10, onChanged: (value) {}),
-                      IconButton(
+              child: Container(
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(12),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.grey.withOpacity(0.3),
+                      spreadRadius: 2,
+                      blurRadius: 8,
+                      offset: const Offset(0, 3), 
+                    ),
+                  ],
+                ),
+                child: ExpansionTile(
+                  title: const Text("مريم البابا"),
+                  expandedAlignment: Alignment.centerLeft,
+                  childrenPadding:
+                      const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                  children: [
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Slider(
+                            value: 2,
+                            min: 0,
+                            max: 10,
+                            onChanged: (value) {},
+                          ),
+                        ),
+                        IconButton(
                           onPressed: () {
-                            player.setSourceUrl(
-                                "http://www.soundjay.com/phone/phone-ring-1.mp3");
+                            // player.setSourceUrl(
+                            //     "http://www.soundjay.com/phone/phone-ring-1.mp3");
+
+                            player.setSource(
+                                AssetSource('sounds/1B6OkGDfBEw.mp3'));
+
+
+                            player.resume();
                           },
-                          icon: Icon(Icons.play_arrow))
-                    ],
-                  ),
-                  Divider(
-                    color: const Color.fromARGB(255, 183, 183, 183),
-                    indent: 20,
-                    endIndent: 20,
-                  ),
-                  Text("سورة ق من الاية 1 الى الاية 20"),
-                  Divider(
-                    color: const Color.fromARGB(255, 183, 183, 183),
-                    indent: 20,
-                    endIndent: 20,
-                  ),
-                  Row(
-                    children: [
-                      Text("تقييم"),
-                      Spacer(),
-                    ],
-                  ),
-                  Divider(
-                    color: const Color.fromARGB(255, 183, 183, 183),
-                    indent: 20,
-                    endIndent: 20,
-                  ),
-                  Text("ارسال ملاحظات"),
-                  ElevatedButton(
-                    onPressed: () {},
-                    child: Text("ارسال"),
-                  )
-                ],
+                          icon: const Icon(Icons.play_arrow),
+                        ),
+                      ],
+                    ),
+                    const Divider(
+                      color: Color.fromARGB(255, 183, 183, 183),
+                      indent: 20,
+                      endIndent: 20,
+                    ),
+                    const Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+                      child: Text("سورة ق من الاية 1 الى الاية 20"),
+                    ),
+                    const Divider(
+                      color: Color.fromARGB(255, 183, 183, 183),
+                      indent: 20,
+                      endIndent: 20,
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: Row(
+                        children: const [
+                          Text("تقييم"),
+                          Spacer(),
+                        ],
+                      ),
+                    ),
+                    const Divider(
+                      color: Color.fromARGB(255, 183, 183, 183),
+                      indent: 20,
+                      endIndent: 20,
+                    ),
+                    const Padding(
+                      padding:
+                          EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+                      child: Text("ارسال ملاحظات"),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 16),
+                      child: ElevatedButton(
+                        onPressed: () {},
+                        child: const Text("ارسال"),
+                      ),
+                    ),
+                    const SizedBox(height: 8),
+                  ],
+                ),
               ),
             ),
-          )
+          ),
         ],
       ),
     );

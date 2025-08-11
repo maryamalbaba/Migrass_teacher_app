@@ -5,9 +5,11 @@ class StudentModel {
             
 String first_name;
 String last_name; 
+num id;
   StudentModel({
     required this.first_name,
     required this.last_name,
+    required this.id,
   });
             
 
@@ -18,6 +20,7 @@ String last_name;
     return StudentModel(
       first_name: first_name ?? this.first_name,
       last_name: last_name ?? this.last_name,
+      id: id ?? this.id,
     );
   }
 
@@ -25,6 +28,8 @@ String last_name;
     return <String, dynamic>{
       'first_name': first_name,
       'last_name': last_name,
+      'id': id,
+
     };
   }
 
@@ -32,6 +37,7 @@ String last_name;
     return StudentModel(
       first_name: map['first_name']?.toString() ??" ",
       last_name: map['last_name']?.toString()?? " ",
+      id: map['id']?? 0,
     );
   }
 
@@ -40,7 +46,7 @@ String last_name;
   factory StudentModel.fromJson(String source) => StudentModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
-  String toString() => 'StudentModel(first_name: $first_name, last_name: $last_name)';
+  String toString() => 'StudentModel(first_name: $first_name, last_name: $last_name , id:$id)';
 
   @override
   bool operator ==(covariant StudentModel other) {
@@ -48,7 +54,11 @@ String last_name;
   
     return 
       other.first_name == first_name &&
-      other.last_name == last_name;
+      other.last_name == last_name
+      &&
+      other.id==id;
+      
+
   }
 
   @override

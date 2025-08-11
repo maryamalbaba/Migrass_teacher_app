@@ -8,45 +8,49 @@ import 'package:teacher/features/tasmi3/data/models/student_model.dart';
 class CircleModel {
   String name;
   List<StudentModel> students;
-  CircleModel({
-    required this.name,
-    required this.students,
-  });
+  num id;
+  CircleModel({required this.name, required this.students, required this.id});
 
   CircleModel copyWith({
     String? name,
     List<StudentModel>? students,
+    num? id,
   }) {
     return CircleModel(
-      name: name ?? this.name,
-      students: students ?? this.students,
-    );
+        name: name ?? this.name,
+        students: students ?? this.students,
+        id: id ?? this.id);
   }
 
   Map<String, dynamic> toMap() {
     return <String, dynamic>{
       'name': name,
       'students': students.map((x) => x.toMap()).toList(),
+      'id':id
     };
   }
 
-factory CircleModel.fromMap(Map<String, dynamic> map) {
-  return CircleModel(
-    name: map['name']?.toString() ?? '',
-    students: (map['students'] is List)
-        ? List<StudentModel>.from(
-            (map['students'] as List).map(
-              (e) => e is Map<String, dynamic> ? StudentModel.fromMap(e) : StudentModel(first_name: '', last_name: ''),
-            ),
-          )
-        : [],
-  );
-}
+  factory CircleModel.fromMap(Map<String, dynamic> map) {
+    return CircleModel(
+      name: map['name']?.toString() ?? '',
+      students: (map['students'] is List)
+          ? List<StudentModel>.from(
+              (map['students'] as List).map(
+                (e) => e is Map<String, dynamic>
+                    ? StudentModel.fromMap(e)
+                    : StudentModel(first_name: '', last_name: '', id:0),
+              ),
+            )
+          : [],
+          id:map['id']
 
+    );
+  }
 
   String toJson() => json.encode(toMap());
 
-  factory CircleModel.fromJson(String source) => CircleModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory CircleModel.fromJson(String source) =>
+      CircleModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() => 'CircleModel(name: $name, students: $students)';
@@ -54,10 +58,8 @@ factory CircleModel.fromMap(Map<String, dynamic> map) {
   @override
   bool operator ==(covariant CircleModel other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.name == name &&
-      listEquals(other.students, students);
+
+    return other.name == name && listEquals(other.students, students);
   }
 
   @override
