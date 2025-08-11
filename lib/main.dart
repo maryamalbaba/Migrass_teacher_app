@@ -7,31 +7,21 @@ import 'package:teacher/core/enums/shared_preferences_keys.dart';
 import 'package:teacher/core/resource/navigator_manager.dart';
 import 'package:teacher/core/resource/route.dart';
 import 'package:teacher/core/resource/route_const.dart';
-
-
-import 'core/resource/services_locator.dart';
-
+import 'package:teacher/core/resource/services_locator.dart';
 import 'package:teacher/features/create_tasmi3_siession/presentation/view/Tasmi3_session_ui.dart';
 import 'package:teacher/features/splash/view/pages/splash_page.dart';
 import 'package:teacher/features/tasmi3/presentation/view/tasmi3.dart';
+
 mixin AppLocale {
   static const String title = 'title';
-
   static const Map<String, dynamic> Ar = {title: 'Localization'};
 }
 
 void main() async {
-  ServicesLocator().init();
-
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPreferencesManger.instance.initSharedPreferences();
   await FlutterLocalization.instance.ensureInitialized();
-void main()async {
-  //769372
-  //603833
-   WidgetsFlutterBinding.ensureInitialized();
-   await SharedPreferencesManger.instance.initSharedPreferences();
-    await FlutterLocalization.instance.ensureInitialized();
+  ServicesLocator().init();
   // await SharedPreferencesManger.instance.remove(SharedPreferencesKeys.token);
   runApp(const MyApp());
 }
@@ -46,6 +36,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
+  @override
   void initState() {
     _localization.init(
       mapLocales: [
@@ -64,26 +55,17 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(375, 812), // عدلها حسب التصميم اللي تستخدمه
+      designSize: const Size(375, 812),
       minTextAdapt: true,
       splitScreenMode: true,
-         designSize: const Size(375, 812),  
-    minTextAdapt: true,
-    splitScreenMode: true,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         initialRoute: RouteConst.splash,
         navigatorKey: AppNavigator.instance.navigationKey,
         onGenerateRoute: AppRoutes.generateRoute,
-
         supportedLocales: _localization.supportedLocales,
         localizationsDelegates: _localization.localizationsDelegates,
-
-        //  home: Tasmi3SessionUi(),
       ),
-         
-      
-         ),
     );
   }
 }

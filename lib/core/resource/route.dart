@@ -4,7 +4,6 @@ import 'package:teacher/core/core_page.dart';
 import 'package:teacher/core/resource/route_const.dart';
 import 'package:teacher/features/StudenTtasmi3/presentation/tasmi3Student.dart';
 import 'package:teacher/features/auth/view/pages/signin_page.dart';
-import 'package:teacher/features/get_session/view/get_tasmi3_session_ui.dart';
 import 'package:teacher/features/session_lesson/view/pages/session_page.dart';
 import 'package:teacher/features/create_tasmi3_siession/presentation/view/Tasmi3_session_ui.dart';
 import 'package:teacher/features/showstudent/presentation/view/showStudent.dart';
@@ -24,7 +23,7 @@ class AppRoutes {
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     final args = settings.arguments;
-    
+
     switch (settings.name) {
       case RouteConst.splash:
         return MaterialPageRoute(builder: (_) => const SplashPage());
@@ -41,19 +40,25 @@ class AppRoutes {
       case RouteConst.CoreUi:
         return MaterialPageRoute(builder: (_) => CoreUi());
       case RouteConst.Tasmi3SessionUi:
-        return MaterialPageRoute(builder: (_) => Tasmi3SessionUi());
-        return MaterialPageRoute(builder: (_) =>  tasmi3UI());
-        case RouteConst.CoreUi:
-        return MaterialPageRoute(builder: (_)=>  CoreUi());
-        case  RouteConst.Tasmi3SessionUi:
-         final id = args as int;
-        return MaterialPageRoute(builder: (_)=>Tasmi3SessionUi(id: id, ) );
-case RouteConst.studentCircle:
-final id1 = args as int;
-        return MaterialPageRoute(builder: (_)=>ShowStudentUi(id: id1, ));
+        return MaterialPageRoute(builder: (_) => Tasmi3SessionUi(id: args as int,));
+        return MaterialPageRoute(builder: (_) => tasmi3UI());
+      case RouteConst.CoreUi:
+        return MaterialPageRoute(builder: (_) => CoreUi());
+      case RouteConst.Tasmi3SessionUi:
+        final id = args as int;
+        return MaterialPageRoute(
+            builder: (_) => Tasmi3SessionUi(
+                  id: id,
+                ));
+      case RouteConst.studentCircle:
+        final id1 = args as int;
+        return MaterialPageRoute(
+            builder: (_) => ShowStudentUi(
+                  id: id1,
+                ));
 
-       case RouteConst.Tasmi3StudentInputUi:
-        return MaterialPageRoute(builder: (_)=>  Tasmi3StudentInputUi());
+      case RouteConst.Tasmi3StudentInputUi:
+        return MaterialPageRoute(builder: (_) => Tasmi3StudentInputUi());
       default:
         return _errorRoute();
     }
