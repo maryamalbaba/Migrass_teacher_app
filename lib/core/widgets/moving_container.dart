@@ -12,7 +12,7 @@ final GestureTapCallback ontap;
       onTap: ontap,
       child: Container(
         width: 40,
-        height: 30,
+        height: 25,
         decoration: BoxDecoration(
       color: darkGreen,
       borderRadius: BorderRadius.all(Radius.circular(5))

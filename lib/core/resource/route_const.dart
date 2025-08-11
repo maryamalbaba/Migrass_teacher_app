@@ -7,5 +7,8 @@ class RouteConst {
   static const String session = 'session';
   static const String CoreUi='CoreUi';
   static const String Tasmi3SessionUi="Tasmi3SessionUi";
+   static const String studentCircle="ShowStudentUi";
+    static const String Tasmi3StudentInputUi="Tasmi3StudentInputUi";
+   
 
 }

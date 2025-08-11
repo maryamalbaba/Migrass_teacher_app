@@ -11,6 +11,9 @@ import 'package:teacher/core/resource/route_const.dart';
 
 import 'core/resource/services_locator.dart';
 
+import 'package:teacher/features/create_tasmi3_siession/presentation/view/Tasmi3_session_ui.dart';
+import 'package:teacher/features/splash/view/pages/splash_page.dart';
+import 'package:teacher/features/tasmi3/presentation/view/tasmi3.dart';
 mixin AppLocale {
   static const String title = 'title';
 
@@ -23,6 +26,12 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await SharedPreferencesManger.instance.initSharedPreferences();
   await FlutterLocalization.instance.ensureInitialized();
+void main()async {
+  //769372
+  //603833
+   WidgetsFlutterBinding.ensureInitialized();
+   await SharedPreferencesManger.instance.initSharedPreferences();
+    await FlutterLocalization.instance.ensureInitialized();
   // await SharedPreferencesManger.instance.remove(SharedPreferencesKeys.token);
   runApp(const MyApp());
 }
@@ -58,6 +67,9 @@ class _MyAppState extends State<MyApp> {
       designSize: const Size(375, 812), // عدلها حسب التصميم اللي تستخدمه
       minTextAdapt: true,
       splitScreenMode: true,
+         designSize: const Size(375, 812),  
+    minTextAdapt: true,
+    splitScreenMode: true,
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
         initialRoute: RouteConst.splash,
@@ -69,6 +81,9 @@ class _MyAppState extends State<MyApp> {
 
         //  home: Tasmi3SessionUi(),
       ),
+         
+      
+         ),
     );
   }
 }

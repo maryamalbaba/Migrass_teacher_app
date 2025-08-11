@@ -6,6 +6,8 @@ import 'package:teacher/core/config/sharedPreferences_manager.dart';
 import 'package:teacher/core/network/network.dart';
 import 'package:teacher/core/resource/assets_manager.dart';
 import 'package:teacher/core/resource/colors_manager.dart';
+import 'package:teacher/core/resource/navigator_manager.dart';
+import 'package:teacher/core/resource/route_const.dart';
 import 'package:teacher/core/widgets/green_container.dart';
 import 'package:teacher/core/widgets/moving_container.dart';
 import 'package:teacher/features/tasmi3/data/data_sourse/Local1/local_tasmi3group.dart';
@@ -56,7 +58,6 @@ class _tasmi3UIState extends State<tasmi3UI> {
               height: MediaQuery.of(context).size.height,
               decoration: BoxDecoration(color: lightGreen2),
               child: Column(
-                
                 children: [
                   SafeArea(
                     child: Stack(children: [
@@ -80,19 +81,20 @@ class _tasmi3UIState extends State<tasmi3UI> {
                         child: SingleChildScrollView(
                           scrollDirection: Axis.horizontal,
                           child: Container(
-                            width:  200,
+                            width: 200,
                             child: Row(
                               mainAxisSize: MainAxisSize.min,
                               children: [
                                 MovingContainer(
-                                  ontap: () {
-                                    setState(() {
-                                      if (currentIndex < succeslist.length - 1)
-                                        currentIndex++;
-                                    });
-                                  },
-                                  iconData: Icon(color: white, Icons.arrow_back)
-                                ),
+                                    ontap: () {
+                                      setState(() {
+                                        if (currentIndex <
+                                            succeslist.length - 1)
+                                          currentIndex++;
+                                      });
+                                    },
+                                    iconData:
+                                        Icon(color: white, Icons.arrow_back)),
                                 SizedBox(width: 8),
                                 Flexible(
                                   child: Text(
@@ -103,14 +105,14 @@ class _tasmi3UIState extends State<tasmi3UI> {
                                   ),
                                 ),
                                 SizedBox(width: 8),
-                               MovingContainer(
-                                 ontap: () {
-                                    setState(() {
-                                      if (currentIndex > 0) currentIndex--;
-                                    });
-                                  },
-                                 iconData: Icon(color: white, Icons.arrow_forward)
-                                ),
+                                MovingContainer(
+                                    ontap: () {
+                                      setState(() {
+                                        if (currentIndex > 0) currentIndex--;
+                                      });
+                                    },
+                                    iconData: Icon(
+                                        color: white, Icons.arrow_forward)),
                               ],
                             ),
                           ),
@@ -144,14 +146,23 @@ class _tasmi3UIState extends State<tasmi3UI> {
                                 return SizedBox(
                                   width: 100,
                                   height: 130,
-                                  child: greenContainer(
-                                    name: currentCircles[index2].name,
+                                  child: InkWell(
+                                    onTap: () {
+                                      AppNavigator.instance.push(
+                                          name: RouteConst.Tasmi3SessionUi,
+                                          extra: currentCircles[index2].id,
+                                          );
+
+                                    },
+                                    child: greenContainer(
+                                      name: currentCircles[index2].name,
+                                    ),
                                   ),
                                 );
                               },
                             ),
                     ),
-                  )
+                  ),
                 ],
               ),
             );
