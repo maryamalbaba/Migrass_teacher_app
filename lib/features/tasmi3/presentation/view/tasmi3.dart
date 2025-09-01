@@ -31,7 +31,7 @@ class tasmi3UI extends StatefulWidget {
 
 class _tasmi3UIState extends State<tasmi3UI> {
   int currentIndex = 0;
-  GetAllTasmi3GroupUseCase? useCase_tasmi3group;
+//  GetAllTasmi3GroupUseCase? useCase_tasmi3group;
 
   @override
   Widget build(BuildContext context) {

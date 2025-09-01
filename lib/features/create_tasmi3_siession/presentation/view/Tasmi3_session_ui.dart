@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:intl/intl.dart';
+import 'package:teacher/core/network/network.dart';
 import 'package:teacher/core/resource/assets_manager.dart'; // Assuming this exists
 import 'package:teacher/core/resource/colors_manager.dart'; // Assuming this exists; otherwise, use Colors.*
 import 'package:teacher/core/resource/icon_image_manager.dart'; // Assuming this exists
@@ -11,6 +13,12 @@ import 'package:teacher/features/create_tasmi3_siession/data/repository/repo_imp
 import 'package:teacher/features/create_tasmi3_siession/data/source/remote/remote_source.dart';
 import 'package:teacher/features/create_tasmi3_siession/domain/usecase/createTasmi3usecase.dart';
 import 'package:teacher/features/create_tasmi3_siession/presentation/bloc/create_tasmi3_session_bloc.dart';
+import 'package:teacher/features/get_session/data/repository/Imp_repository.dart';
+import 'package:teacher/features/get_session/data/source/local.dart';
+import 'package:teacher/features/get_session/data/source/remote.dart';
+import 'package:teacher/features/get_session/domain/usecase/sessiontasmi3.dart';
+import 'package:teacher/features/get_session/presenture/bloc/tasmi3_session_bloc.dart';
+import 'package:teacher/features/get_session/presenture/view/SesionsTasmi3Ui.dart';
 import 'package:teacher/features/tasmi3/presentation/bloc/tasmi3_group_bloc.dart';
 // Removed unused import: tasmi3_group_bloc.dart
 import 'package:flutter/material.dart';
@@ -49,21 +57,32 @@ List <Tasmi3Session> sessions=[];
             ),
           ),
         ),
+
+BlocProvider(
+      create: (context) => Tasmi3SessionBloc(
+        GetAllTasmiSessionUseCase(
+          repo: SessionRepoImpl(
+            remoteSessionDataSource: RemoteSessionDataSource(),
+            localSessionDataSource: LocalSessionDataSource(),
+            networkConnection: NetworkConnection(
+              connection: InternetConnectionChecker.createInstance(),
+            ),
+          ),
+        ),
+      )..add(getSessionEvent(id: widget.id)),
+    ),
+
       ],
       child: BlocListener<CreateTasmi3SessionBloc, CreateTasmi3SessionState>(
         listener: (context, state) {
           if (state is SuucessCreateTasmi3Session) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('تم الإرسال بنجاح'))
-
+               SnackBar(content: Text('تم الإرسال بنجاح')),
              
             );
+context.read<Tasmi3SessionBloc>().add(getSessionEvent(id: widget.id));
 
-             if (state.newSession != null) {
-              setState(() {
-                sessions.add(state.newSession!);
-              });
-            }
+             
           } else if (state is FailedTasmi3Session) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('فشل الإرسال: ')),
@@ -125,7 +144,7 @@ List <Tasmi3Session> sessions=[];
                                 ),
                                 ElevatedButton(
                                   onPressed: () {
-                                       Tasmi3Session   session = Tasmi3Session(circle_id: 2, date: date ?? today);
+                                       Tasmi3Session   session = Tasmi3Session(circle_id:widget.id , date: date ?? today);
                                    
                                     print('Sending session: ${session.toJson()}'); 
                                     bloc.add(CreateTasmi3SessionEventt(tasmi3session: session));
@@ -232,29 +251,11 @@ List <Tasmi3Session> sessions=[];
                         
                         ),
                       ),
-                     child: sessions.isEmpty
-                          ? const Center(child: Text('لا توجد جلسات بعد'))
-                          : ListView.builder(
-                              itemCount: sessions.length,
-                              itemBuilder: (context, index) {
-                                final session = sessions[index];
-                                return InkWell(
-                                  onTap: (){
-                                      AppNavigator.instance.push(
-                                          name: RouteConst.studentCircle,
-                                          extra: sessions[index].circle_id,
-                                          );
-
-                                  },
-                                  child: Card(
-                                    margin: const EdgeInsets.symmetric(
-                                        vertical: 8, horizontal: 16),
-                                    child: ListTile(
-                                      title: Text(
-                                        'تاريخ الجلسة: ${session.date}',
-                                        style: const TextStyle(fontSize: 16),
-                                                            ))),
-                                );})
+                     child: 
+                    
+                           SessionUi(id:widget.id ,)
+                          
+                   
                   ),
                   )]
               ),
@@ -287,3 +288,26 @@ class backContainer extends StatelessWidget {
     );
   }
 }
+
+
+ //        ListView.builder(
+                    //           itemCount: sessions.length,
+                    //           itemBuilder: (context, index) {
+                    //             final session = sessions[index];
+                    //             return InkWell(
+                    //               onTap: (){
+                    //                   AppNavigator.instance.push(
+                    //                       name: RouteConst.studentCircle,
+                    //                       extra: sessions[index].circle_id,
+                    //                       );
+
+                    //               },
+                    //               child: Card(
+                    //                 margin: const EdgeInsets.symmetric(
+                    //                     vertical: 8, horizontal: 16),
+                    //                 child: ListTile(
+                    //                   title: Text(
+                    //                     'تاريخ الجلسة: ${session.date}',
+                    //                     style: const TextStyle(fontSize: 16),
+                    //                                         ))),
+                    //             );})

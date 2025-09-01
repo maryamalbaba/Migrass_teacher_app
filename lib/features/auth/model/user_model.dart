@@ -41,28 +41,29 @@ class UserModel extends Equatable {
     this.token = '',
   });
 
-  factory UserModel.fromJson(Map<String, dynamic> json) {
-    return UserModel(
-      id: json['id'] as int,
-      email: json['email'] as String,
-      firstName: json['first_name'] as String,
-      lastName: json['last_name'] as String,
-      mosqueId: json['mosque_id'] as int,
-      birthDate: json['birth_date'] as String,
-      isSaveQuran: json['is_save_quran'] as bool,
-      phone: json['phone'] as String,
-      fatherPhone: json['father_phone'] as String,
-      address: json['address'] as String,
-      certificates: json['certificates'] as String,
-      experiences: json['experiences'] as String,
-      memorizedParts: json['memorized_parts'] as int,
-      roleId: json['role_id'] as int,
-      updatedAt:json['updated_at'] as String,
-      createdAt: json['created_at'] as String,
-      codeUser: json['code_user'] as String,
-      token: json['token'] as String,
-    );
-  }
+factory UserModel.fromJson(Map<String, dynamic> json) {
+  return UserModel(
+    id: json['id'] ?? 0,
+    email: json['email'] ?? '',
+    firstName: json['first_name'] ?? '',
+    lastName: json['last_name'] ?? '',
+    mosqueId: json['mosque_id'] ?? 0,
+    birthDate: json['birth_date'] ?? '',
+    isSaveQuran: json['is_save_quran'] ?? false,
+    phone: json['phone'] ?? '',
+    fatherPhone: json['father_phone'] ?? '',
+    address: json['address'] ?? '',
+    certificates: json['certificates'] ?? '',
+    experiences: json['experiences'] ?? '',
+    memorizedParts: json['memorized_parts'] ?? 0,
+    roleId: json['role_id'] ?? 0,
+    updatedAt: json['updated_at'] ?? '',
+    createdAt: json['created_at'] ?? '',
+    codeUser: json['code_user'] ?? '',
+    token: json['token'] ?? '',
+  );
+}
+
 
   Map<String, dynamic> toJson() {
     return {
