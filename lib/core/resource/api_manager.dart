@@ -15,4 +15,6 @@ class ApiManager {
   static String HadithHistoryApi = "hadith-recitation/showAll/";
 
   static String QuranHistoryApi = "quran-recitation/showAll/";
+
+  static String hadithbookApi="hadith-book/getAllBook"; 
 }

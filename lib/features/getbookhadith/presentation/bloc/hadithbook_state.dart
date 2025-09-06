@@ -8,3 +8,15 @@ sealed class HadithbookState extends Equatable {
 }
 
 final class HadithbookInitial extends HadithbookState {}
+
+class HadithLoading extends HadithbookState {}
+
+class HadithSucces extends HadithbookState {
+  final List<HadithModel> hadiths;
+  HadithSucces(this.hadiths);
+}
+
+class HadithError extends HadithbookState {
+  final String message;
+  HadithError(this.message);
+}

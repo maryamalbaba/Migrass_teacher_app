@@ -12,4 +12,5 @@ class RouteConst {
    static const String StudentHistoryUi="StudentHistoryUi";
    
 
+static const String HadithScreen="HadithScreen";
 }

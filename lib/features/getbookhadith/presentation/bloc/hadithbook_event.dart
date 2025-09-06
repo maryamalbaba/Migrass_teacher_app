@@ -6,3 +6,6 @@ sealed class HadithbookEvent extends Equatable {
   @override
   List<Object> get props => [];
 }
+
+
+class FetchHadithEvent extends HadithbookEvent {}

@@ -63,7 +63,10 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
     await Future.delayed(Duration(seconds: 6));
     String token = SharedPreferencesManger.instance.getString(SharedPreferencesKeys.token) ?? '';
     if (token.isNotEmpty) {
-      AppNavigator.instance.push(name: RouteConst.CoreUi);
+      AppNavigator.instance.push(
+        //name: RouteConst.CoreUi
+      name: RouteConst.HadithScreen
+      );
     } else {
       AppNavigator.instance.push(name: RouteConst.login);
     }
