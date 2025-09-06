@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:teacher/core/core_page.dart';
 import 'package:teacher/core/resource/route_const.dart';
 import 'package:teacher/features/StudenTtasmi3/presentation/tasmi3Student.dart';
+import 'package:teacher/features/Student_history/presentation/view/Student_history_ui.dart';
 import 'package:teacher/features/auth/view/pages/signin_page.dart';
 import 'package:teacher/features/session_lesson/view/pages/session_page.dart';
 import 'package:teacher/features/create_tasmi3_siession/presentation/view/Tasmi3_session_ui.dart';
@@ -39,26 +40,41 @@ class AppRoutes {
                 ));
       case RouteConst.CoreUi:
         return MaterialPageRoute(builder: (_) => CoreUi());
+
       case RouteConst.Tasmi3SessionUi:
-        return MaterialPageRoute(builder: (_) => Tasmi3SessionUi(id: args as int,));
-        return MaterialPageRoute(builder: (_) => tasmi3UI());
-      case RouteConst.CoreUi:
-        return MaterialPageRoute(builder: (_) => CoreUi());
-      case RouteConst.Tasmi3SessionUi:
-        final id = args as int;
+        final args = settings.arguments as List;
+
         return MaterialPageRoute(
             builder: (_) => Tasmi3SessionUi(
-                  id: id,
+                  id: args[0] as int,
+                  CircleName: args[1],
+                  CircleType:args[2]
                 ));
-      case RouteConst.studentCircle:
-        final id1 = args as int;
+
+        return MaterialPageRoute(builder: (_) => tasmi3UI());
+
+      case RouteConst.CoreUi:
+        return MaterialPageRoute(builder: (_) => CoreUi());
+
+      case RouteConst.ShowStudentUi:
+      final args=settings.arguments as List;
+        final id1 = args[0];
+        final circleType=args[1];
         return MaterialPageRoute(
+          
             builder: (_) => ShowStudentUi(
-                  id: id1,
+                  id: id1, circleType: circleType,
                 ));
 
       case RouteConst.Tasmi3StudentInputUi:
         return MaterialPageRoute(builder: (_) => Tasmi3StudentInputUi());
+
+       case RouteConst.StudentHistoryUi:
+      final args=settings.arguments as List;
+        return MaterialPageRoute(builder: (_) => StudentHistoryUi(studentid: args[0], type: args[1],),
+        
+        );
+
       default:
         return _errorRoute();
     }

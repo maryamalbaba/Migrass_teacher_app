@@ -22,17 +22,14 @@ class Tasmi3SessionBloc extends Bloc<Tasmi3SessionEvent, Tasmi3SessionState> {
 
       emit(GetSessionloading());
       Either<ErrorModel, List<Session>> u = await use_case.call(event.id);
-      return u.fold((l)
-       {
+      return u.fold((l) {
         emit(GetSessionFailed());
-      }, 
-      (r)
-     {
-
-        emit(GetSessionSucces(list: r));
-
-
-
+      }, (r) {
+        if (r.isEmpty) {
+          emit(GetSessionEmpty());
+        } else {
+          emit(GetSessionSucces(list: r));
+        }
       });
     });
   }

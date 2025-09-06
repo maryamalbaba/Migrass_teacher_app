@@ -9,6 +9,10 @@ class ApiManager {
 
   static String createTasmi3Session = "session/create";
   static String ShowStudet = "circle/showWithId/";
-   static String grtTasmmi3SessionforAncircle="/session/showAll/";
-  
+  static String grtTasmmi3SessionforAncircle = "session/showAll/";
+  static String sura = "SurahAndAyah/AllSurahAndAyah";
+
+  static String HadithHistoryApi = "hadith-recitation/showAll/";
+
+  static String QuranHistoryApi = "quran-recitation/showAll/";
 }

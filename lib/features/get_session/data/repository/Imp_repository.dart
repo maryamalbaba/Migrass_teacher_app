@@ -16,7 +16,7 @@ class SessionRepoImpl implements RepositrySession {
   RemoteSessionDataSource remoteSessionDataSource;
   LocalSessionDataSource localSessionDataSource;
 //  num  id;
-  NetworkConnection networkConnection;
+  NetworkConnection2 networkConnection;
   SessionRepoImpl({
     required this.remoteSessionDataSource,
     required this.localSessionDataSource,
@@ -29,17 +29,17 @@ class SessionRepoImpl implements RepositrySession {
   @override
   Future<Either<ErrorModel, List<Session>>> getAllTasmi3Session(  num id) async {
     print('==========================================================');
-    print(await networkConnection.is_connected);
+   
     if (await networkConnection.is_connected) {
       try {
    final groups =
             await remoteSessionDataSource.remotservice(id);
         if (groups is List<Session>) {
-         List<Session> groups1 = await remoteSessionDataSource.remotservice(id);
-          localSessionDataSource.chachingSession(groups1);
+        // List<Session> groups1 = await remoteSessionDataSource.remotservice(id);
+          localSessionDataSource.chachingSession(groups);
 
           print("pass repo Im");
-          return Right(groups1);
+          return Right(groups);
 
 
         } 

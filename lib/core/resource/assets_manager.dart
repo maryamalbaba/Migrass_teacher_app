@@ -28,4 +28,11 @@ class ImagesManager {
   static String downCloude = "assets/images/downColude.png";
   static String logoWithsentance = "assets/images/logoWithsentance.png";
   static String greenBcak = "assets/images/greenBcak.png";
+
+  static String threecircle="assets/images/three_circle.png";
+
+  
+
+   static String addDotted="assets/images/add_dotted.png";
+
 }

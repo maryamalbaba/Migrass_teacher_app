@@ -10,7 +10,7 @@ import 'package:teacher/features/tasmi3/domain/repository/repositry_tasmi3group.
 class Tasmi3groupRepoImpl implements RepositryTasmi3group {
   RemoteTasmi3groupDataSource remoteTasmi3groupDataSource;
   LocalTasmi3groupDataSource locaTasmi3groupDataSource;
-  NetworkConnection networkConnection;
+  NetworkConnection2 networkConnection;
   Tasmi3groupRepoImpl(
       {required this.locaTasmi3groupDataSource,
       required this.networkConnection,
@@ -19,17 +19,17 @@ class Tasmi3groupRepoImpl implements RepositryTasmi3group {
   @override
   Future<Either<ErrorModel, List<Tasmi3Model>>> getAllgroupTasmi3() async {
     print('==========================================================');
-    print(await networkConnection.is_connected);
+   
     if (await networkConnection.is_connected) {
       try {
    final groups =
             await remoteTasmi3groupDataSource.remotservice();
         if (groups is List<Tasmi3Model>) {
-         List<Tasmi3Model> groups1 = await remoteTasmi3groupDataSource.remotservice();
-          locaTasmi3groupDataSource.chachingTasmi3Circle(groups1);
+        // List<Tasmi3Model> groups1 = await remoteTasmi3groupDataSource.remotservice();
+          locaTasmi3groupDataSource.chachingTasmi3Circle(groups);
 
           print("pass repo Im");
-          return Right(groups1);
+          return Right(groups);
 
 
         } 

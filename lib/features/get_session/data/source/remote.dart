@@ -22,7 +22,8 @@ result.fold(
   },
   (r){
     print("enter");
- List<Session> list=List.generate(r["session"].length,  (index)=>Session.fromMap(r["session"][index]));
+    final sessions = r["data"] ?? [];
+ List<Session> list=List.generate(sessions.length,  (index)=>Session.fromMap(sessions[index]));
 print("pass");
 return list;
   }

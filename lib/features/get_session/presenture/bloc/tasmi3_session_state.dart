@@ -21,3 +21,5 @@ class GetSessionSucces extends Tasmi3SessionState {
 class GetSessionFailed extends Tasmi3SessionState {}
 
 class GetSessionloading extends Tasmi3SessionState {}
+
+class GetSessionEmpty extends Tasmi3SessionState {}

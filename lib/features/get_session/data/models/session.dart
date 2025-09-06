@@ -5,11 +5,13 @@ class Session {
   num? id;
   num? circle_id;
   String date;
+  String day;
   String? description;
   Session({
     this.id,
     this.circle_id,
     required this.date,
+     required this.day,
     this.description,
   });
 
@@ -17,12 +19,14 @@ class Session {
     num? id,
     num? circle_id,
     String? date,
+    String? day,
     String? description,
   }) {
     return Session(
       id: id ?? this.id,
       circle_id: circle_id ?? this.circle_id,
       date: date ?? this.date,
+      day: day ??this.day,
       description: description ?? this.description,
     );
   }
@@ -32,7 +36,8 @@ class Session {
       'id': id,
       'circle_id': circle_id,
       'date': date,
-      'description': description,
+      'day':day,
+      'description':description,
     };
   }
 
@@ -41,6 +46,7 @@ class Session {
       id: map['id'] != null ? map['id'] as num : null,
       circle_id: map['circle_id'] != null ? map['circle_id'] as num : null,
       date: map['date'] as String,
+      day:map['day'] as String, 
       description: map['description'] != null ? map['description'] as String : null,
     );
   }
@@ -51,7 +57,7 @@ class Session {
 
   @override
   String toString() {
-    return 'Session(id: $id, circle_id: $circle_id, date: $date, description: $description)';
+    return 'Session(id: $id, circle_id: $circle_id, date: $date, description: $description, day:$day)';
   }
 
   @override
@@ -62,6 +68,7 @@ class Session {
       other.id == id &&
       other.circle_id == circle_id &&
       other.date == date &&
+      other.day==day&&
       other.description == description;
   }
 

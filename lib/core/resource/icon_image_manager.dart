@@ -18,5 +18,7 @@ class IconImageManager {
   static const String statistics = "assets/iconImage/statistics.png";
   static const String study = "assets/iconImage/study.png";
    static const String home_svg= "assets/icons/home.svg";
-  
+   
+
+   static const String star= "assets/iconImage/Star.png";
 }

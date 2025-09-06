@@ -15,20 +15,14 @@ class LocalTasmi3groupDataSource {
         .setList(SharedPreferencesKeys.tasmi3Circle, l);
   }
 
- List<Tasmi3Model> getChachedTasmi3Circle() {
-  final chachefModelList = SharedPreferencesManger.instance
-      .getList(SharedPreferencesKeys.tasmi3Circle);
+  List<Tasmi3Model> getChachedTasmi3Circle() {
+    final chachefModelList = SharedPreferencesManger.instance
+        .getList(SharedPreferencesKeys.tasmi3Circle);
 
-  if (chachefModelList == null) return [];
+    if (chachefModelList == null) return [];
 
- List <Tasmi3Model>chachdeList=chachefModelList
-      .map((e) => Tasmi3Model.fromJson(e))
-      .toList();
-  return chachdeList;
-}
-
-
-
-
-  
+    List<Tasmi3Model> chachdeList =
+        chachefModelList.map((e) => Tasmi3Model.fromJson(e)).toList();
+    return chachdeList;
+  }
 }
