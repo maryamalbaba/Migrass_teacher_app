@@ -65,16 +65,15 @@ class AppRoutes {
       case RouteConst.CoreUi:
         return MaterialPageRoute(builder: (_) => CoreUi());
 
-      case RouteConst.Tasmi3SessionUi:
-        return MaterialPageRoute(
-            builder: (_) => Tasmi3SessionUi(
-                  id: args as int,
-                ));
+      // case RouteConst.Tasmi3SessionUi:
+      //   return MaterialPageRoute(
+      //       builder: (_) => Tasmi3SessionUi(
+      //             id: args as int,
+      //           ));
         return MaterialPageRoute(builder: (_) => tasmi3UI());
       case RouteConst.CoreUi:
         return MaterialPageRoute(builder: (_) => CoreUi());
       case RouteConst.Tasmi3SessionUi:
-        final id = args as int;
         final args = settings.arguments as List;
 
         return MaterialPageRoute(
