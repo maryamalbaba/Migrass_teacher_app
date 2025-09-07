@@ -11,31 +11,32 @@ import 'package:teacher/features/StudenTtasmi3/domain/usecase/usecase_sura.dart'
 import 'package:teacher/features/StudenTtasmi3/presentation/bloc/sura_bloc.dart';
 import 'package:teacher/features/Student_history/domain/enum/type_tasmi3enum.dart';
 import 'package:teacher/features/sendtasmi3/create_quran_tasmi3/data/models/quran_tasmi3_send.dart';
+import 'package:teacher/features/sendtasmi3/create_quran_tasmi3/data/models/talqeen_tasmi3_send.dart';
 import 'package:teacher/features/sendtasmi3/create_quran_tasmi3/data/repo/repoImp.dart';
 import 'package:teacher/features/sendtasmi3/create_quran_tasmi3/data/source/remote/send_remote.dart';
 import 'package:teacher/features/sendtasmi3/create_quran_tasmi3/domin/usecase/usecase.dart';
 import 'package:teacher/features/sendtasmi3/create_quran_tasmi3/presentation/bloc/send_tasmi3_bloc.dart';
 
-class Tasmi3StudentInputUi extends StatefulWidget {
+class talqeeentInputUi extends StatefulWidget {
   final num sessionid;
   final num studentid;
 
-  const Tasmi3StudentInputUi({
+  const talqeeentInputUi({
     Key? key,
     required this.sessionid,
     required this.studentid,
   }) : super(key: key);
 
   @override
-  State<Tasmi3StudentInputUi> createState() => _Tasmi3StudentInputUiState();
+  State<talqeeentInputUi> createState() => _talqeeentInputUiState();
 }
 
-class _Tasmi3StudentInputUiState extends State<Tasmi3StudentInputUi> {
+class _talqeeentInputUiState extends State<talqeeentInputUi> {
   SuraModel? selectedSura1;
   SuraModel? selectedSura2;
   String? selectedAya1;
   String? selectedAya2;
-  bool isExsam = false;
+  // bool isExsam = false;
   bool iscounted = false;
   bool isattend = false;
   @override
@@ -220,10 +221,10 @@ class _Tasmi3StudentInputUiState extends State<Tasmi3StudentInputUi> {
                               ],
                             ),
                             const Divider(),
-                            CustumCheckBoxList(
-                              iscounted1: isExsam,
-                              text: 'سبر',
-                            ),
+                            // CustumCheckBoxList(
+                            //   // iscounted1: isExsam,
+                            //   text: 'سبر',
+                            // ),
                             CustumCheckBoxList(
                               iscounted1: iscounted,
                               text: 'هل محسوب ام لا',
@@ -262,7 +263,7 @@ class _Tasmi3StudentInputUiState extends State<Tasmi3StudentInputUi> {
                                       selectedAya1 != null &&
                                       selectedSura2 != null &&
                                       selectedAya2 != null) {
-                                    final model = QuranTasmi3Send(
+                                    final model = TalqeenTasmi3Send(
                                       session_id: widget.sessionid,
                                       student_id: widget.studentid,
                                       from_sura_id: selectedSura1!.id,
@@ -270,14 +271,14 @@ class _Tasmi3StudentInputUiState extends State<Tasmi3StudentInputUi> {
                                       to_sura_id: selectedSura2!
                                           .id, 
                                       to_verse: int.parse(selectedAya2!),
-                                      is_counted: iscounted,
-                                      is_exam: isExsam,
+                                     // is_counted: iscounted,
+                                    //  is_exam: isExsam,
                                       attendance: isattend,
                                     );
 
                                     context.read<SendTasmi3Bloc>().add(
                                           SendTasmi3(
-                                            type: HalaqaType.quran,
+                                            type: HalaqaType.talqen,
                                             model: model,
                                           ),
                                         );

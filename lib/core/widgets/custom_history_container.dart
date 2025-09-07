@@ -10,8 +10,9 @@ import 'package:teacher/icons_flutter_icons.dart';
 // mintGreen2
 // threecircle
 class CustomHistoryContainer extends StatelessWidget {
-   CustomHistoryContainer({super.key, required this.atendance, required this.fromSurahName, required this.fromAyah, required this.toSurahName, required this.toAyah});
-final bool atendance;
+   CustomHistoryContainer({super.key, 
+   required this.atendance, required this.fromSurahName, required this.fromAyah, required this.toSurahName, required this.toAyah});
+final String atendance;
  final String fromSurahName;
 final num fromAyah;
  final String toSurahName;
@@ -35,7 +36,7 @@ final num toAyah;
               crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                 Row(children: [ Image.asset(IconImageManager.star,width: 30,height: 30,),
-               Text("حضور: ${atendance ? "نعم" : "لا"}")
+               Text("حضور: ${atendance }")
                 
                 ,],),
                 

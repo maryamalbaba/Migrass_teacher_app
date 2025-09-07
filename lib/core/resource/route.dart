@@ -6,6 +6,7 @@ import 'package:teacher/features/StudenTtasmi3/presentation/tasmi3Student.dart';
 import 'package:teacher/features/Student_history/presentation/view/Student_history_ui.dart';
 import 'package:teacher/features/auth/view/pages/signin_page.dart';
 import 'package:teacher/features/getbookhadith/presentation/view/hdithui.dart';
+import 'package:teacher/features/input_talqeen/input_talqeen.dart';
 import 'package:teacher/features/session_lesson/view/pages/session_page.dart';
 import 'package:teacher/features/create_tasmi3_siession/presentation/view/Tasmi3_session_ui.dart';
 import 'package:teacher/features/showstudent/presentation/view/showStudent.dart';
@@ -58,14 +59,18 @@ class AppRoutes {
         final args = settings.arguments as List;
         final id1 = args[0];
         final circleType = args[1];
+        final sessionid=args[2];
         return MaterialPageRoute(
             builder: (_) => ShowStudentUi(
                   id: id1,
-                  circleType: circleType,
+                  circleType: circleType, sessionid: sessionid,
                 ));
 
       case RouteConst.Tasmi3StudentInputUi:
-        return MaterialPageRoute(builder: (_) => Tasmi3StudentInputUi());
+        final args = settings.arguments as List;
+        final sessionid = args[0];
+        final studentid = args[1];
+        return MaterialPageRoute(builder: (_) => Tasmi3StudentInputUi(sessionid: sessionid, studentid: studentid,));
 
       case RouteConst.StudentHistoryUi:
         final args = settings.arguments as List;
@@ -73,10 +78,22 @@ class AppRoutes {
           builder: (_) => StudentHistoryUi(
             studentid: args[0],
             type: args[1],
+            sessionid: args[2],
           ),
         );
+
+        case RouteConst.talqeeentInputUi:
+        final args = settings.arguments as List;
+        final sessionid = args[0];
+        final studentid = args[1];
+        return MaterialPageRoute(builder: (_)=>talqeeentInputUi(sessionid:sessionid , studentid: studentid,));
       case RouteConst.HadithScreen:
-        return MaterialPageRoute(builder: (_) => HadithScreen());
+        final args = settings.arguments as List;
+        return MaterialPageRoute(
+            builder: (_) => HadithScreen(
+                  sessionid: args[0],
+                  studentid: args[1],
+                ));
       default:
         return _errorRoute();
     }

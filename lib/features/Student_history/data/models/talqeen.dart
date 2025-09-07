@@ -3,15 +3,16 @@ import 'dart:convert';
 
 import 'package:teacher/features/Student_history/data/models/tasmi3_model.dart';
 
-class QuranTasimi3History extends Tasmi3HistoryModel {
-  String date;
+class Talqeen extends Tasmi3HistoryModel {
+
+   String date;
   String day;
   String attendance;
   String fromSurahName;
   num fromAyah;
   String toSurahName;
   num toAyah;
-  QuranTasimi3History({
+  Talqeen({
     required this.date,
     required this.day,
     required this.attendance,
@@ -21,7 +22,7 @@ class QuranTasimi3History extends Tasmi3HistoryModel {
     required this.toAyah,
   });
 
-  QuranTasimi3History copyWith({
+  Talqeen copyWith({
     String? date,
     String? day,
     String? attendance,
@@ -30,7 +31,7 @@ class QuranTasimi3History extends Tasmi3HistoryModel {
     String? toSurahName,
     num? toAyah,
   }) {
-    return QuranTasimi3History(
+    return Talqeen(
       date: date ?? this.date,
       day: day ?? this.day,
       attendance: attendance ?? this.attendance,
@@ -53,8 +54,8 @@ class QuranTasimi3History extends Tasmi3HistoryModel {
     };
   }
 
-  factory QuranTasimi3History.fromMap(Map<String, dynamic> map) {
-    return QuranTasimi3History(
+  factory Talqeen.fromMap(Map<String, dynamic> map) {
+    return Talqeen(
       date: map['date'] as String,
       day: map['day'] as String,
       attendance: map['attendance'] as String,
@@ -67,15 +68,15 @@ class QuranTasimi3History extends Tasmi3HistoryModel {
 
   String toJson() => json.encode(toMap());
 
-  factory QuranTasimi3History.fromJson(String source) => QuranTasimi3History.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory Talqeen.fromJson(String source) => Talqeen.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
-    return 'QuranTasimi3History(date: $date, day: $day, attendance: $attendance, fromSurahName: $fromSurahName, fromAyah: $fromAyah, toSurahName: $toSurahName, toAyah: $toAyah)';
+    return 'Talqeen(date: $date, day: $day, attendance: $attendance, fromSurahName: $fromSurahName, fromAyah: $fromAyah, toSurahName: $toSurahName, toAyah: $toAyah)';
   }
 
   @override
-  bool operator ==(covariant QuranTasimi3History other) {
+  bool operator ==(covariant Talqeen other) {
     if (identical(this, other)) return true;
   
     return 

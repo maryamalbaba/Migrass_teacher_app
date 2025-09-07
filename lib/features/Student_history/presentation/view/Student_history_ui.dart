@@ -7,34 +7,44 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:teacher/core/resource/assets_manager.dart';
 import 'package:teacher/core/resource/colors_manager.dart';
 import 'package:teacher/core/resource/icon_image_manager.dart';
+import 'package:teacher/core/resource/navigator_manager.dart';
+import 'package:teacher/core/resource/route_const.dart';
 import 'package:teacher/core/widgets/custom_date_container.dart';
 import 'package:teacher/core/widgets/custom_history_container.dart';
 import 'package:teacher/features/Student_history/data/models/hadith_tasmi3.dart';
 import 'package:teacher/features/Student_history/data/models/quran_tasimi3_history.dart';
+import 'package:teacher/features/Student_history/data/models/talqeen.dart';
 import 'package:teacher/features/Student_history/data/repo/repo_Imp.dart';
 import 'package:teacher/features/Student_history/data/source/remote/imp_remote.dart';
 import 'package:teacher/features/Student_history/domain/enum/type_tasmi3enum.dart';
 import 'package:teacher/features/Student_history/domain/repo/repo.dart';
 import 'package:teacher/features/Student_history/domain/usecase/student_tasmi3_history.dart';
 import 'package:teacher/features/Student_history/presentation/view/bloc/tasmi3_history_bloc.dart';
+
 class StudentHistoryUi extends StatelessWidget {
   const StudentHistoryUi({
     super.key,
     required this.studentid,
     required this.type,
+    required this.sessionid,
   });
 
-  final String studentid;
+  final num studentid;
   final String type;
+  final num sessionid;
 
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => Tasmi3HistoryBloc(
-      GetStudentHistory(HistoryTasmi3RepoImp(remotdata:StudentHistoryRemoteDataSourceImpl() )))
-      ..add(
+        GetStudentHistory(
+          HistoryTasmi3RepoImp(
+            remotdata: StudentHistoryRemoteDataSourceImpl(),
+          ),
+        ),
+      )..add(
           GetTasmi3History(
-            studentId: studentid,
+            studentId: studentid.toString(),
             type: _mapType(type),
           ),
         ),
@@ -49,34 +59,83 @@ class StudentHistoryUi extends StatelessWidget {
             ],
           ),
         ),
-        body: BlocBuilder<Tasmi3HistoryBloc, Tasmi3HistoryState>(
-          builder: (context, state) {
-            if (state is loadingHistoryState) {
-              return const Center(child: CircularProgressIndicator());
-            }
+        body: CustomScrollView(
+          slivers: [
+            /// زر الإضافة
+            SliverToBoxAdapter(
+              child: InkWell(
+                onTap: () {
+                  if (type == "حديث") {
+                    AppNavigator.instance.push(
+                      name: RouteConst.HadithScreen,
+                      extra: [sessionid, studentid],
+                    );
+                  } else if(type=="تلقين"){
+                    AppNavigator.instance.push(
+                      name: RouteConst.talqeeentInputUi, extra:[sessionid, studentid],
+                    );
+                  }
+                  else {
+                    AppNavigator.instance.push(
+                      name: RouteConst.Tasmi3StudentInputUi ,extra:[sessionid, studentid],
+                    );
+                  }
+                },
+                child: Image.asset(ImagesManager.addDotted),
+              ),
+            ),
 
-            if (state is ErrorTasmi3History) {
-              return Center(child: Text(state.message));
-            }
+            /// البيانات
+            BlocBuilder<Tasmi3HistoryBloc, Tasmi3HistoryState>(
+              builder: (context, state) {
+                if (state is loadingHistoryState) {
+                  return const SliverToBoxAdapter(
+                    child: Center(child: CircularProgressIndicator()),
+                  );
+                }
 
-            if (state is SuccestTasmi3History) {
-              final items = state.items;
+                if (state is ErrorTasmi3History) {
+                  print(" error :::: ${state.message}");
+                  return const SliverToBoxAdapter(
+                    child: Center(child: Text("حصل خطأ ما")),
+                  );
+                }
 
-              if (items.isEmpty) {
-                return const Center(child: Text("لا يوجد سجلات"));
-              }
+                if (state is SuccestTasmi3History) {
+                  final items = state.items;
 
-              return CustomScrollView(
-                slivers: [
-                  SliverToBoxAdapter(
-                    child: Image.asset(ImagesManager.addDotted),
-                  ),
-                  SliverList(
+                  if (items.isEmpty) {
+                    return const SliverToBoxAdapter(
+                      child: Center(child: Text("لا يوجد سجلات")),
+                    );
+                  }
+
+                  return SliverList(
                     delegate: SliverChildBuilderDelegate(
                       (context, index) {
                         final item = items[index];
 
                         if (item is QuranTasimi3History) {
+                          return Row(
+                            children: [
+                              CustomDateContainer(
+                                date: item.date,
+                                day: item.day,
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: CustomHistoryContainer(
+                                  atendance: item.attendance,
+                                  fromSurahName: item.fromSurahName,
+                                  fromAyah: item.fromAyah,
+                                  toSurahName: item.toSurahName,
+                                  toAyah: item.toAyah,
+                                ),
+                              ),
+                            ],
+                          );
+                        }
+                        if (item is Talqeen) {
                           return Row(
                             children: [
                               CustomDateContainer(
@@ -120,23 +179,20 @@ class StudentHistoryUi extends StatelessWidget {
                       },
                       childCount: items.length,
                     ),
-                  ),
-                ],
-              );
-            }
+                  );
+                }
 
-            return const SizedBox.shrink(); // initial state
-          },
+                return const SliverToBoxAdapter(
+                  child: SizedBox.shrink(),
+                );
+              },
+            ),
+          ],
         ),
       ),
     );
   }
 }
-
-
-
-
-
 
 HalaqaType _mapType(String type) {
   switch (type) {
@@ -145,16 +201,11 @@ HalaqaType _mapType(String type) {
     case "حديث":
       return HalaqaType.hadith;
     case "تلقين":
-      return HalaqaType.quran;
+      return HalaqaType.talqen;
     default:
       return HalaqaType.quran; // default
   }
 }
-
-
-
-
-
 
 class CustomHadithHistoryContainer extends StatelessWidget {
   const CustomHadithHistoryContainer({
@@ -164,7 +215,7 @@ class CustomHadithHistoryContainer extends StatelessWidget {
     required this.pageNumber,
   });
 
-  final bool attendance;
+  final String attendance;
   final String bookName;
   final num pageNumber;
 
@@ -195,12 +246,12 @@ class CustomHadithHistoryContainer extends StatelessWidget {
                         height: 30,
                       ),
                       const SizedBox(width: 6),
-                      Text("حضور: ${attendance ? "نعم" : "لا"}"),
+                      Text("حضور: $attendance"),
                     ],
                   ),
                   const SizedBox(height: 8),
 
-                  /// عنوان
+                  /// 
                   Row(
                     children: [
                       Image.asset(
@@ -212,10 +263,9 @@ class CustomHadithHistoryContainer extends StatelessWidget {
                       const Text("تسميع حديث:"),
                     ],
                   ),
-
                   const SizedBox(height: 8),
 
-                  /// تفاصيل الحديث
+                  
                   Padding(
                     padding: const EdgeInsets.only(right: 30),
                     child: Column(

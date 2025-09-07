@@ -1,4 +1,4 @@
 enum HalaqaType{
 
-quran, hadith,
+quran, hadith,talqen
 }

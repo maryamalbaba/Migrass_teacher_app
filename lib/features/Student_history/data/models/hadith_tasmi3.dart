@@ -6,7 +6,7 @@ import 'package:teacher/features/Student_history/data/models/tasmi3_model.dart';
 class HadithHistoryTasmi3 extends Tasmi3HistoryModel {
   String date;
   String day;
-  bool attendance;
+  String attendance;
   String bookName;
   num pageNamber;
   HadithHistoryTasmi3({
@@ -20,7 +20,7 @@ class HadithHistoryTasmi3 extends Tasmi3HistoryModel {
   HadithHistoryTasmi3 copyWith({
     String? date,
     String? day,
-    bool? attendance,
+    String? attendance,
     String? bookName,
     num? pageNamber,
   }) {
@@ -47,7 +47,7 @@ class HadithHistoryTasmi3 extends Tasmi3HistoryModel {
     return HadithHistoryTasmi3(
       date: map['date'] as String,
       day: map['day'] as String,
-      attendance: map['attendance'] as bool,
+      attendance: map['attendance'] as String,
       bookName: map['bookName'] as String,
       pageNamber: map['pageNamber'] as num,
     );

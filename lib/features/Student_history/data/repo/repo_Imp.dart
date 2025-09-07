@@ -13,16 +13,21 @@ class HistoryTasmi3RepoImp implements StudentHistoryRepository {
   @override
   Future<Either<ErrorModel, List<Tasmi3HistoryModel>>> getStudentHistory(
       {required String studentId, required HalaqaType type}) async {
-   try {
+    try {
       if (type == HalaqaType.quran) {
         final result = await remotdata.getQuranHistory(studentId: studentId);
-       
+
         return result;
       }
 
       if (type == HalaqaType.hadith) {
         final result = await remotdata.getHadithHistory(studentId: studentId);
-      
+
+        return result;
+      }
+      if (type == HalaqaType.talqen) {
+        final result = await remotdata.getTalqeenHistory(studentId: studentId);
+
         return result;
       }
 

@@ -2,6 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:teacher/core/error/Error_model.dart';
 import 'package:teacher/features/Student_history/data/models/hadith_tasmi3.dart';
 import 'package:teacher/features/Student_history/data/models/quran_tasimi3_history.dart';
+import 'package:teacher/features/Student_history/data/models/talqeen.dart';
 
 abstract class StudentHistoryRemoteDataSource {
   Future<Either<ErrorModel,List<QuranTasimi3History>>> getQuranHistory({
@@ -9,6 +10,10 @@ abstract class StudentHistoryRemoteDataSource {
   });
 
   Future<Either<ErrorModel,List<HadithHistoryTasmi3>>> getHadithHistory({
+    required String studentId,
+  });
+
+  Future<Either<ErrorModel,List<Talqeen>>> getTalqeenHistory({
     required String studentId,
   });
 }

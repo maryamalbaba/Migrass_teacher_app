@@ -22,7 +22,7 @@ class SessionUi extends StatefulWidget {
   }) : super(key: key);
 
   final num id;
- final String circleType;
+  final String circleType;
   @override
   State<SessionUi> createState() => _Tasmi3SessionUiState();
 }
@@ -38,7 +38,13 @@ class _Tasmi3SessionUiState extends State<SessionUi> {
               itemBuilder: (context, index) {
                 return InkWell(
                   onTap: () {
-                    AppNavigator.instance.push(name: RouteConst.ShowStudentUi ,extra:[state.list[index].circle_id ,widget.circleType ]);
+                    AppNavigator.instance.push(
+                        name: RouteConst.ShowStudentUi,
+                        extra: [
+                          state.list[index].circle_id,
+                          widget.circleType,
+                          widget.id
+                        ]);
                   },
                   child: ListTile(
                     title: Text(state.list[index].day),
