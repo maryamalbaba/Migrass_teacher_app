@@ -1,3 +1,4 @@
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,7 +32,6 @@ class tasmi3UI extends StatefulWidget {
 
 class _tasmi3UIState extends State<tasmi3UI> {
   int currentIndex = 0;
-  GetAllTasmi3GroupUseCase? useCase_tasmi3group;
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +39,9 @@ class _tasmi3UIState extends State<tasmi3UI> {
       create: (context) => Tasmi3GroupBloc(GetAllTasmi3GroupUseCase(
           repo: Tasmi3groupRepoImpl(
               locaTasmi3groupDataSource: LocalTasmi3groupDataSource(),
-              networkConnection: NetworkConnection(
-                  connection: InternetConnectionChecker.createInstance()),
+              networkConnection: NetworkConnection2(
+                connectivity: Connectivity(),
+              ),
               remoteTasmi3groupDataSource: RemoteTasmi3groupDataSource())))
         ..add(GetTsmi3CircleTeacherEvent()),
       child: BlocBuilder<Tasmi3GroupBloc, Tasmi3GroupState>(
@@ -150,9 +151,14 @@ class _tasmi3UIState extends State<tasmi3UI> {
                                     onTap: () {
                                       AppNavigator.instance.push(
                                           name: RouteConst.Tasmi3SessionUi,
-                                          extra: currentCircles[index2].id,
-                                          );
+                                          extra: [
+                                            currentCircles[index2].id,
+                                            currentCircles[index2].name,
+                                          currentGroup.type
 
+                                          ],
+                                          
+                                          );
                                     },
                                     child: greenContainer(
                                       name: currentCircles[index2].name,

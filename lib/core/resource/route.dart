@@ -3,11 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:teacher/core/core_page.dart';
 import 'package:teacher/core/resource/route_const.dart';
 import 'package:teacher/features/StudenTtasmi3/presentation/tasmi3Student.dart';
+import 'package:teacher/features/Student_history/presentation/view/Student_history_ui.dart';
 import 'package:teacher/features/auth/view/pages/signin_page.dart';
 import 'package:teacher/features/exam/data/model/exam_model.dart';
 import 'package:teacher/features/exam/presentation/pages/circle_exam_page.dart';
 import 'package:teacher/features/exam/presentation/pages/exam_page.dart';
 import 'package:teacher/features/exam/presentation/pages/mark_page.dart';
+import 'package:teacher/features/getbookhadith/presentation/view/hdithui.dart';
+import 'package:teacher/features/input_talqeen/input_talqeen.dart';
 import 'package:teacher/features/session_lesson/view/pages/session_page.dart';
 import 'package:teacher/features/create_tasmi3_siession/presentation/view/Tasmi3_session_ui.dart';
 import 'package:teacher/features/showstudent/presentation/view/showStudent.dart';
@@ -61,6 +64,7 @@ class AppRoutes {
                 ));
       case RouteConst.CoreUi:
         return MaterialPageRoute(builder: (_) => CoreUi());
+
       case RouteConst.Tasmi3SessionUi:
         return MaterialPageRoute(
             builder: (_) => Tasmi3SessionUi(
@@ -71,19 +75,56 @@ class AppRoutes {
         return MaterialPageRoute(builder: (_) => CoreUi());
       case RouteConst.Tasmi3SessionUi:
         final id = args as int;
+        final args = settings.arguments as List;
+
         return MaterialPageRoute(
             builder: (_) => Tasmi3SessionUi(
-                  id: id,
-                ));
-      case RouteConst.studentCircle:
-        final id1 = args as int;
+                id: args[0] as int, CircleName: args[1], CircleType: args[2]));
+
+        return MaterialPageRoute(builder: (_) => tasmi3UI());
+
+      case RouteConst.CoreUi:
+        return MaterialPageRoute(builder: (_) => CoreUi());
+
+      case RouteConst.ShowStudentUi:
+        final args = settings.arguments as List;
+        final id1 = args[0];
+        final circleType = args[1];
+        final sessionid=args[2];
         return MaterialPageRoute(
             builder: (_) => ShowStudentUi(
                   id: id1,
+                  circleType: circleType, sessionid: sessionid,
                 ));
 
       case RouteConst.Tasmi3StudentInputUi:
-        return MaterialPageRoute(builder: (_) => Tasmi3StudentInputUi());
+        final args = settings.arguments as List;
+        final sessionid = args[0];
+        final studentid = args[1];
+        return MaterialPageRoute(builder: (_) => Tasmi3StudentInputUi(sessionid: sessionid, studentid: studentid,));
+
+      case RouteConst.StudentHistoryUi:
+        final args = settings.arguments as List;
+        return MaterialPageRoute(
+          builder: (_) => StudentHistoryUi(
+            studentid: args[0],
+            type: args[1],
+            sessionid: args[2],
+          ),
+        );
+
+        case RouteConst.talqeeentInputUi:
+        final args = settings.arguments as List;
+        final sessionid = args[0];
+        final studentid = args[1];
+        return MaterialPageRoute(builder: (_)=>talqeeentInputUi(sessionid:sessionid , studentid: studentid,));
+      case RouteConst.HadithScreen:
+        final args = settings.arguments as List;
+        return MaterialPageRoute(
+            builder: (_) => HadithScreen(
+                  sessionid: args[0],
+                  studentid: args[1],
+                ));
       default:
         return _errorRoute();
     }

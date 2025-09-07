@@ -1,33 +1,50 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'package:connectivity_plus/connectivity_plus.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:internet_connection_checker/internet_connection_checker.dart';
 import 'package:intl/intl.dart';
+import 'package:intl/intl.dart';
+
+import 'package:teacher/core/network/network.dart';
+import 'package:teacher/core/resource/assets_manager.dart';
 import 'package:teacher/core/resource/assets_manager.dart'; // Assuming this exists
+import 'package:teacher/core/resource/colors_manager.dart';
 import 'package:teacher/core/resource/colors_manager.dart'; // Assuming this exists; otherwise, use Colors.*
+import 'package:teacher/core/resource/icon_image_manager.dart';
 import 'package:teacher/core/resource/icon_image_manager.dart'; // Assuming this exists
 import 'package:teacher/core/resource/navigator_manager.dart';
 import 'package:teacher/core/resource/route_const.dart';
 import 'package:teacher/features/create_tasmi3_siession/data/model/session.dart';
-import 'package:teacher/features/create_tasmi3_siession/data/repository/repo_impl.dart';
-import 'package:teacher/features/create_tasmi3_siession/data/source/remote/remote_source.dart';
-import 'package:teacher/features/create_tasmi3_siession/domain/usecase/createTasmi3usecase.dart';
-import 'package:teacher/features/create_tasmi3_siession/presentation/bloc/create_tasmi3_session_bloc.dart';
-import 'package:teacher/features/tasmi3/presentation/bloc/tasmi3_group_bloc.dart';
-// Removed unused import: tasmi3_group_bloc.dart
-import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:intl/intl.dart';
-import 'package:teacher/core/resource/assets_manager.dart';
-import 'package:teacher/core/resource/colors_manager.dart';
-import 'package:teacher/core/resource/icon_image_manager.dart';
 import 'package:teacher/features/create_tasmi3_siession/data/model/session.dart';
 import 'package:teacher/features/create_tasmi3_siession/data/repository/repo_impl.dart';
+import 'package:teacher/features/create_tasmi3_siession/data/repository/repo_impl.dart';
+import 'package:teacher/features/create_tasmi3_siession/data/source/remote/remote_source.dart';
 import 'package:teacher/features/create_tasmi3_siession/data/source/remote/remote_source.dart';
 import 'package:teacher/features/create_tasmi3_siession/domain/usecase/createTasmi3usecase.dart';
+import 'package:teacher/features/create_tasmi3_siession/domain/usecase/createTasmi3usecase.dart';
 import 'package:teacher/features/create_tasmi3_siession/presentation/bloc/create_tasmi3_session_bloc.dart';
+import 'package:teacher/features/create_tasmi3_siession/presentation/bloc/create_tasmi3_session_bloc.dart';
+import 'package:teacher/features/get_session/data/repository/Imp_repository.dart';
+import 'package:teacher/features/get_session/data/source/local.dart';
+import 'package:teacher/features/get_session/data/source/remote.dart';
+import 'package:teacher/features/get_session/domain/usecase/sessiontasmi3.dart';
+import 'package:teacher/features/get_session/presenture/bloc/tasmi3_session_bloc.dart';
+import 'package:teacher/features/get_session/presenture/view/SesionsTasmi3Ui.dart';
+import 'package:teacher/features/tasmi3/presentation/bloc/tasmi3_group_bloc.dart';
 
 class Tasmi3SessionUi extends StatefulWidget {
-   Tasmi3SessionUi({super.key, required this.id});
- final num id;
+  Tasmi3SessionUi({
+    Key? key,
+    required this.id,
+    required this.CircleName,
+    required this.CircleType,
+  }) : super(key: key);
+  final num id;
+  final  String CircleName;
+  final String CircleType;
   @override
   State<Tasmi3SessionUi> createState() => _Tasmi3SessionUiState();
 }
@@ -35,7 +52,7 @@ class Tasmi3SessionUi extends StatefulWidget {
 class _Tasmi3SessionUiState extends State<Tasmi3SessionUi> {
   final today = DateFormat('yyyy-MM-dd').format(DateTime.now());
   String? date;
-List <Tasmi3Session> sessions=[];
+  List<Tasmi3Session> sessions = [];
   @override
   Widget build(BuildContext context) {
     final double stackHeight = MediaQuery.of(context).size.height * 0.20;
@@ -45,25 +62,35 @@ List <Tasmi3Session> sessions=[];
         BlocProvider(
           create: (context) => CreateTasmi3SessionBloc(
             CreateTasmi3Usecase(
-              repo: RepoImpCreateTasmi3Session(r: RemoteSource(), ),
+              repo: RepoImpCreateTasmi3Session(
+                r: RemoteSource(),
+              ),
             ),
           ),
+        ),
+        BlocProvider(
+          create: (context) => Tasmi3SessionBloc(
+            GetAllTasmiSessionUseCase(
+              repo: SessionRepoImpl(
+                remoteSessionDataSource: RemoteSessionDataSource(),
+                localSessionDataSource: LocalSessionDataSource(),
+                networkConnection: NetworkConnection2(
+                 connectivity: Connectivity()
+                ),
+              ),
+            ),
+          )..add(getSessionEvent(id: widget.id)),
         ),
       ],
       child: BlocListener<CreateTasmi3SessionBloc, CreateTasmi3SessionState>(
         listener: (context, state) {
           if (state is SuucessCreateTasmi3Session) {
             ScaffoldMessenger.of(context).showSnackBar(
-              const SnackBar(content: Text('تم الإرسال بنجاح'))
-
-             
+              SnackBar(content: Text('تم الإرسال بنجاح')),
             );
-
-             if (state.newSession != null) {
-              setState(() {
-                sessions.add(state.newSession!);
-              });
-            }
+            context
+                .read<Tasmi3SessionBloc>()
+                .add(getSessionEvent(id: widget.id));
           } else if (state is FailedTasmi3Session) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('فشل الإرسال: ')),
@@ -72,7 +99,6 @@ List <Tasmi3Session> sessions=[];
         },
         child: Builder(
           builder: (innerContext) => Scaffold(
-            
             floatingActionButton: InkWell(
               onTap: () {
                 final bloc = innerContext.read<CreateTasmi3SessionBloc>();
@@ -101,20 +127,23 @@ List <Tasmi3Session> sessions=[];
                                   children: [
                                     IconButton(
                                       onPressed: () async {
-                                  
-                                        final DateTime? pickedDate = await showDatePicker(
+                                        final DateTime? pickedDate =
+                                            await showDatePicker(
                                           initialDate: DateTime.now(),
                                           firstDate: DateTime(2022),
                                           lastDate: DateTime(2100),
                                           context: dialogContext,
                                         );
                                         if (pickedDate != null) {
-                                          final newDate = DateFormat('yyyy-MM-dd').format(pickedDate);
+                                          final newDate =
+                                              DateFormat('yyyy-MM-dd')
+                                                  .format(pickedDate);
                                           setStateDialog(() {
                                             date = newDate;
                                           });
                                           setState(() {
-                                            date = newDate; // Update parent state
+                                            date =
+                                                newDate; // Update parent state
                                           });
                                         }
                                       },
@@ -125,10 +154,14 @@ List <Tasmi3Session> sessions=[];
                                 ),
                                 ElevatedButton(
                                   onPressed: () {
-                                       Tasmi3Session   session = Tasmi3Session(circle_id: 2, date: date ?? today);
-                                   
-                                    print('Sending session: ${session.toJson()}'); 
-                                    bloc.add(CreateTasmi3SessionEventt(tasmi3session: session));
+                                    Tasmi3Session session = Tasmi3Session(
+                                        circle_id: widget.id,
+                                        date: date ?? today);
+
+                                    print(
+                                        'Sending session: ${session.toJson()}');
+                                    bloc.add(CreateTasmi3SessionEventt(
+                                        tasmi3session: session));
                                     Navigator.pop(dialogContext);
                                   },
                                   child: const Text("ارسال"),
@@ -159,105 +192,84 @@ List <Tasmi3Session> sessions=[];
             ),
             backgroundColor: lightGreen2,
             body: SafeArea(
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: stackHeight,
-                    width: double.infinity,
-                    child: Stack(
-                      alignment: Alignment.center,
-                      children: [
-                        Align(
-                          alignment: Alignment.topLeft,
-                          child: Image.asset(
-                            ImagesManager.greenBcak,
-                            fit: BoxFit.cover,
-                            width: double.infinity,
-                          ),
+              child: Column(children: [
+                SizedBox(
+                  height: stackHeight,
+                  width: double.infinity,
+                  child: Stack(
+                    alignment: Alignment.center,
+                    children: [
+                      Align(
+                        alignment: Alignment.topLeft,
+                        child: Image.asset(
+                          ImagesManager.greenBcak,
+                          fit: BoxFit.cover,
+                          width: double.infinity,
                         ),
-                        Row(
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            Flexible(
-                              flex: 1,
-                              child: Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: SizedBox(
-                                  height: stackHeight - 16.0,
-                                  width: MediaQuery.of(context).size.width * 0.40,
-                                  child: SingleChildScrollView(
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        const Text(
-                                          "حلقة تبارك",
-                                          style: TextStyle(fontSize: 15),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                        ),
-                                        Text(
-                                          DateTime.now().toString(),
-                                          style: const TextStyle(fontSize: 12),
-                                          maxLines: 1,
-                                        ),
-                                      ],
-                                    ),
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          Flexible(
+                            flex: 1,
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: SizedBox(
+                                height: stackHeight - 16.0,
+                                width: MediaQuery.of(context).size.width * 0.40,
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    children: [
+                                       Text(
+                                       widget.CircleName,
+                                        style: TextStyle(fontSize: 15),
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                      ),
+                                      Text(
+                                        DateTime.now().toString(),
+                                        style: const TextStyle(fontSize: 12),
+                                        maxLines: 1,
+                                      ),
+                                    ],
                                   ),
                                 ),
                               ),
                             ),
-                            const Spacer(),
-                             Align(
-                              alignment: Alignment.topLeft,
-                              child: InkWell(
-                                onTap: (){
-                                 AppNavigator.instance.push(name: RouteConst.CoreUi);
+                          ),
+                          const Spacer(),
+                          Align(
+                            alignment: Alignment.topLeft,
+                            child: InkWell(
+                                onTap: () {
+                                  AppNavigator.instance
+                                      .push(name: RouteConst.CoreUi);
                                 },
                                 child: backContainer()),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                          ),
+                        ],
+                      ),
+                    ],
                   ),
-                  Expanded(
-                    child: Container(
+                ),
+                Expanded(
+                  child: Container(
                       width: double.infinity,
                       decoration: const BoxDecoration(
                         color: Colors.white,
                         borderRadius: BorderRadius.only(
                           topLeft: Radius.circular(30),
                           topRight: Radius.circular(30),
-                        
                         ),
                       ),
-                     child: sessions.isEmpty
-                          ? const Center(child: Text('لا توجد جلسات بعد'))
-                          : ListView.builder(
-                              itemCount: sessions.length,
-                              itemBuilder: (context, index) {
-                                final session = sessions[index];
-                                return InkWell(
-                                  onTap: (){
-                                      AppNavigator.instance.push(
-                                          name: RouteConst.studentCircle,
-                                          extra: sessions[index].circle_id,
-                                          );
-
-                                  },
-                                  child: Card(
-                                    margin: const EdgeInsets.symmetric(
-                                        vertical: 8, horizontal: 16),
-                                    child: ListTile(
-                                      title: Text(
-                                        'تاريخ الجلسة: ${session.date}',
-                                        style: const TextStyle(fontSize: 16),
-                                                            ))),
-                                );})
-                  ),
-                  )]
-              ),
+                      child: SessionUi(
+                        id: widget.id, circleType: widget.CircleType,
+                      )),
+                )
+              ]),
             ),
           ),
         ),
@@ -287,3 +299,26 @@ class backContainer extends StatelessWidget {
     );
   }
 }
+
+
+ //        ListView.builder(
+                    //           itemCount: sessions.length,
+                    //           itemBuilder: (context, index) {
+                    //             final session = sessions[index];
+                    //             return InkWell(
+                    //               onTap: (){
+                    //                   AppNavigator.instance.push(
+                    //                       name: RouteConst.studentCircle,
+                    //                       extra: sessions[index].circle_id,
+                    //                       );
+
+                    //               },
+                    //               child: Card(
+                    //                 margin: const EdgeInsets.symmetric(
+                    //                     vertical: 8, horizontal: 16),
+                    //                 child: ListTile(
+                    //                   title: Text(
+                    //                     'تاريخ الجلسة: ${session.date}',
+                    //                     style: const TextStyle(fontSize: 16),
+                    //                                         ))),
+                    //             );})
