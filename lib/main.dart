@@ -59,6 +59,9 @@ class _MyAppState extends State<MyApp> {
       minTextAdapt: true,
       splitScreenMode: true,
       child: MaterialApp(
+        theme: ThemeData(
+          fontFamily: 'ArefRuqaa',  // هنا حدد اسم الخط اللي كتبته في pubspec.yaml
+        ),
         debugShowCheckedModeBanner: false,
         initialRoute: RouteConst.splash,
         navigatorKey: AppNavigator.instance.navigationKey,

@@ -3,6 +3,8 @@ class ApiManager {
   static String login = "auth/login";
   static String lesson = "circle/showCircleTypeForTeacher_dars";
   static String session = "LessonSession/GetAllSessionesLession/";
+  static String lessonSession = "LessonSession/";
+  static String exam = "exam/";
   static String createSession = "LessonSession/createLessonSession/";
   static String getTasmi3Circle4Teacher =
       "circle/showCircleTypeForTeacher_Tasmii_Talqeen_Hadith";

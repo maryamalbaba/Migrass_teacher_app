@@ -1,4 +1,5 @@
 import 'package:dartz/dartz.dart';
+import 'package:teacher/core/network/network_status.dart';
 import 'package:teacher/features/lessons/data/model/lesson_model.dart';
 
 import '../../../../core/api/api_service.dart';
@@ -10,8 +11,10 @@ abstract class BaseLessonRemoteDataSource{
 }
 
 class LessonDataSource extends BaseLessonRemoteDataSource {
+
  @override
   Future<Either<String?, List<LessonModel>>> getLesson() async {
+  NetworkStatus.instance.isConnected;
   final result = await ApiService.instance.makeRequest(
    method: ApiMethod.get,
    endPoint: ApiManager.lesson,

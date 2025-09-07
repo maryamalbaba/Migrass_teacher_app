@@ -61,6 +61,7 @@ class _SplashPageState extends State<SplashPage> with TickerProviderStateMixin {
 
   Future<void> _navigateNext() async {
     await Future.delayed(Duration(seconds: 6));
+    // SharedPreferencesManger.instance.clearLocale();
     String token = SharedPreferencesManger.instance.getString(SharedPreferencesKeys.token) ?? '';
     if (token.isNotEmpty) {
       AppNavigator.instance.push(
