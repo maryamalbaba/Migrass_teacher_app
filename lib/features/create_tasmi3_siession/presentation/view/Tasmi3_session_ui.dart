@@ -38,11 +38,11 @@ import 'package:teacher/features/tasmi3/presentation/bloc/tasmi3_group_bloc.dart
 class Tasmi3SessionUi extends StatefulWidget {
   Tasmi3SessionUi({
     Key? key,
-    required this.id,
+    required this.circle_id,
     required this.CircleName,
     required this.CircleType,
   }) : super(key: key);
-  final num id;
+  final num circle_id;
   final  String CircleName;
   final String CircleType;
   @override
@@ -79,7 +79,7 @@ class _Tasmi3SessionUiState extends State<Tasmi3SessionUi> {
                 ),
               ),
             ),
-          )..add(getSessionEvent(id: widget.id)),
+          )..add(getSessionEvent(id: widget.circle_id)),
         ),
       ],
       child: BlocListener<CreateTasmi3SessionBloc, CreateTasmi3SessionState>(
@@ -90,7 +90,7 @@ class _Tasmi3SessionUiState extends State<Tasmi3SessionUi> {
             );
             context
                 .read<Tasmi3SessionBloc>()
-                .add(getSessionEvent(id: widget.id));
+                .add(getSessionEvent(id: widget.circle_id));
           } else if (state is FailedTasmi3Session) {
             ScaffoldMessenger.of(context).showSnackBar(
               SnackBar(content: Text('فشل الإرسال: ')),
@@ -155,7 +155,7 @@ class _Tasmi3SessionUiState extends State<Tasmi3SessionUi> {
                                 ElevatedButton(
                                   onPressed: () {
                                     Tasmi3Session session = Tasmi3Session(
-                                        circle_id: widget.id,
+                                        circle_id: widget.circle_id,
                                         date: date ?? today);
 
                                     print(
@@ -266,7 +266,7 @@ class _Tasmi3SessionUiState extends State<Tasmi3SessionUi> {
                         ),
                       ),
                       child: SessionUi(
-                        id: widget.id, circleType: widget.CircleType,
+                        circl_id: widget.circle_id, circleType: widget.CircleType,
                       )),
                 )
               ]),

@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:teacher/core/resource/navigator_manager.dart';
 import 'package:teacher/features/Student_history/domain/enum/type_tasmi3enum.dart';
 
 import 'package:teacher/features/getbookhadith/data/models/hadith_model.dart';
@@ -53,6 +54,9 @@ class _HadithScreenState extends State<HadithScreen> {
         ),
       ],
       child: Scaffold(
+        appBar: AppBar(leading: IconButton(onPressed: (){
+          AppNavigator.instance.pop();
+        }, icon: Icon(Icons.arrow_back)),),
         body: Column(
           children: [
             Container(
@@ -78,7 +82,11 @@ class _HadithScreenState extends State<HadithScreen> {
                       return Center(child: Text("خطأ: ${state.message}"));
                     } else if (state is HadithSucces) {
                       final books = state.hadiths;
-
+                      if (books.isEmpty) {
+                        return const Center(
+                          child: Text("لا يوجد كتب حديث حالياً"),
+                        );
+                      }
                       return SingleChildScrollView(
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -172,7 +180,6 @@ class _HadithScreenState extends State<HadithScreen> {
                             ),
                             const SizedBox(height: 40),
 
-                          
                             BlocListener<SendTasmi3Bloc, SendTasmi3State>(
                               listener: (context, state) {
                                 if (state is SendTasmi3Success) {
@@ -205,8 +212,7 @@ class _HadithScreenState extends State<HadithScreen> {
                                         final hadithModel = Hadithtasmi3(
                                           session_id: widget.sessionid,
                                           student_id: widget.studentid,
-                                          book_id: selectedBook!
-                                              .id, 
+                                          book_id: selectedBook!.id,
                                           from_hadith: startHadith!,
                                           to_hadith: endHadith!,
                                           is_counted: true,
@@ -216,9 +222,8 @@ class _HadithScreenState extends State<HadithScreen> {
 
                                         context.read<SendTasmi3Bloc>().add(
                                               SendTasmi3(
-                                                type: HalaqaType.hadith,
-                                                model: hadithModel 
-                                              ),
+                                                  type: HalaqaType.hadith,
+                                                  model: hadithModel),
                                             );
                                       }
                                     : null,

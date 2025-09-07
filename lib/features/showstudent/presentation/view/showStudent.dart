@@ -11,12 +11,13 @@ import 'package:teacher/features/showstudent/presentation/bloc/show_students_blo
 import 'package:teacher/features/tasmi3/data/models/student_model.dart';
 
 class ShowStudentUi extends StatelessWidget {
-  final num id;
+
+  final num circleId;
   final String circleType;
   final num sessionid;
   const ShowStudentUi({
     Key? key,
-    required this.id,
+    required this.circleId,
     required this.circleType,
     required this.sessionid,
   }) : super(key: key);
@@ -25,10 +26,13 @@ class ShowStudentUi extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocProvider(
       create: (context) => ShowStudentsBloc(service: ShowCircle())
-        ..add(ShowStudentevent(id: id)),
+        ..add(ShowStudentevent(id: circleId)),
       child: Scaffold(
         appBar: AppBar(
           title: const Text('قائمة الطلاب'),
+          leading: IconButton(onPressed: (){
+            AppNavigator.instance.pop();
+          }, icon: Icon(Icons.arrow_back)),
         ),
         body: BlocBuilder<ShowStudentsBloc, ShowStudentsState>(
           builder: (context, state) {
@@ -59,11 +63,13 @@ class ShowStudentUi extends StatelessWidget {
           child: PlantCard(
             name: student.first_name ?? "بدون اسم",
             onView: () {
+              print("session id in studentapear  $sessionid");
               AppNavigator.instance
                   .push(name: RouteConst.StudentHistoryUi, extra: [
                 student.id,
                 circleType, 
                 sessionid,
+                circleId 
               ]);
             },
           ),

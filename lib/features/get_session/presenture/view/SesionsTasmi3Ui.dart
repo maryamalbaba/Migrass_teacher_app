@@ -17,11 +17,11 @@ import 'package:teacher/features/showstudent/presentation/view/showStudent.dart'
 class SessionUi extends StatefulWidget {
   SessionUi({
     Key? key,
-    required this.id,
+    required this.circl_id,
     required this.circleType,
   }) : super(key: key);
 
-  final num id;
+  final num circl_id;
   final String circleType;
   @override
   State<SessionUi> createState() => _Tasmi3SessionUiState();
@@ -41,9 +41,9 @@ class _Tasmi3SessionUiState extends State<SessionUi> {
                     AppNavigator.instance.push(
                         name: RouteConst.ShowStudentUi,
                         extra: [
-                          state.list[index].circle_id,
+                          widget.circl_id,
                           widget.circleType,
-                          widget.id
+                          state.list[index].id
                         ]);
                   },
                   child: ListTile(

@@ -12,6 +12,11 @@ class remotHadith {
     return result.fold((l) {
       return Left(ErrorModel(message: l ?? " ops Error happen "));
     }, (r) {
+      final data = r["data"];
+       if (data == null || data is! List || data.isEmpty) {
+          // رجّع List فاضية → الهاندل في الـ UI
+          return const Right([]);
+        }
       List<HadithModel> list = List.generate(
           r["data"].length, (index) => HadithModel.fromMap(r["data"][index]));
       return Right(list);

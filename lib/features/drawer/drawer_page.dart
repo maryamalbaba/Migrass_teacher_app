@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:teacher/core/resource/colors_manager.dart';
 import 'package:teacher/core/resource/navigator_manager.dart';
 import 'package:teacher/core/resource/route_const.dart';
@@ -17,17 +18,19 @@ class DrawerPage extends StatelessWidget {
       body: Container(
         height: double.infinity,
         width: double.infinity,
-        margin: EdgeInsets.only(top: 40),
+        margin: EdgeInsets.only(top: 5.h),
         decoration: BoxDecoration(
           color: white,
           image: DecorationImage(
             image: AssetImage(
               ImagesManager.drawer,
+              
             ),
+            
             fit: BoxFit.cover,
           ),
         ),
-        child: Column(
+        child: ListView(
           children: [
             CustomAppbar(title: '',showBackButton: true,),
             SizedBox(

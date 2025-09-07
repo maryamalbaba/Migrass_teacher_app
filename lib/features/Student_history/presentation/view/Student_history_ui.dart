@@ -23,15 +23,17 @@ import 'package:teacher/features/Student_history/presentation/view/bloc/tasmi3_h
 
 class StudentHistoryUi extends StatelessWidget {
   const StudentHistoryUi({
-    super.key,
+    Key? key,
     required this.studentid,
     required this.type,
     required this.sessionid,
-  });
+    required this.circl_id,
+  }) : super(key: key);
 
   final num studentid;
   final String type;
   final num sessionid;
+  final num circl_id;
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +67,9 @@ class StudentHistoryUi extends StatelessWidget {
             SliverToBoxAdapter(
               child: InkWell(
                 onTap: () {
+                  
                   if (type == "حديث") {
+                    print("Sessionid::::::::::: $sessionid");
                     AppNavigator.instance.push(
                       name: RouteConst.HadithScreen,
                       extra: [sessionid, studentid],
@@ -77,11 +81,13 @@ class StudentHistoryUi extends StatelessWidget {
                   }
                   else {
                     AppNavigator.instance.push(
-                      name: RouteConst.Tasmi3StudentInputUi ,extra:[sessionid, studentid],
+                      name: RouteConst.Tasmi3StudentInputUi ,extra:[sessionid, studentid,circl_id,type],
                     );
                   }
                 },
-                child: Image.asset(ImagesManager.addDotted),
+                child: SizedBox(
+                  height:200.h,
+                  child: Image.asset(ImagesManager.addDotted)),
               ),
             ),
 
@@ -227,7 +233,7 @@ class CustomHadithHistoryContainer extends StatelessWidget {
         children: [
           Container(
             width: 250.w,
-            height: 150.h,
+            height: 160.h,
             decoration: BoxDecoration(
               color: mintGreen2,
               borderRadius: BorderRadius.circular(15),
