@@ -23,7 +23,6 @@ class RecordModel {
     required this.studentaudio,
     required this.sura_record,
   });
-  
 
   RecordModel copyWith({
     num? id,
@@ -55,12 +54,16 @@ class RecordModel {
       'surah_id': surah_id,
       'from_ayah_id': from_ayah_id,
       'to_ayah_id': to_ayah_id,
-      'studentaudio': studentaudio.toMap(),
-      'sura_record': sura_record.toMap(),
+      // Align keys with API response structure
+      'student': studentaudio.toMap(),
+      'surah': sura_record.toMap(),
     };
   }
 
   factory RecordModel.fromMap(Map<String, dynamic> map) {
+    final dynamic studentRaw = map['student'];
+    final dynamic surahRaw = map['surah'];
+
     return RecordModel(
       id: map['id'] as num,
       student_id: map['student_id'] as num,
@@ -68,14 +71,20 @@ class RecordModel {
       surah_id: map['surah_id'] as num,
       from_ayah_id: map['from_ayah_id'] as num,
       to_ayah_id: map['to_ayah_id'] as num,
-      studentaudio: Studentaudio.fromMap(map['studentaudio'] as Map<String,dynamic>),
-      sura_record: SuraRecord.fromMap(map['sura_record'] as Map<String,dynamic>),
+      // Safely parse nested objects; fall back to empty values if null/missing
+      studentaudio: studentRaw is Map<String, dynamic>
+          ? Studentaudio.fromMap(studentRaw)
+          : Studentaudio(first_name: '', last_name: ''),
+      sura_record: surahRaw is Map<String, dynamic>
+          ? SuraRecord.fromMap(surahRaw)
+          : SuraRecord(name: ''),
     );
   }
 
   String toJson() => json.encode(toMap());
 
-  factory RecordModel.fromJson(String source) => RecordModel.fromMap(json.decode(source) as Map<String, dynamic>);
+  factory RecordModel.fromJson(String source) =>
+      RecordModel.fromMap(json.decode(source) as Map<String, dynamic>);
 
   @override
   String toString() {
@@ -85,27 +94,26 @@ class RecordModel {
   @override
   bool operator ==(covariant RecordModel other) {
     if (identical(this, other)) return true;
-  
-    return 
-      other.id == id &&
-      other.student_id == student_id &&
-      other.file == file &&
-      other.surah_id == surah_id &&
-      other.from_ayah_id == from_ayah_id &&
-      other.to_ayah_id == to_ayah_id &&
-      other.studentaudio == studentaudio &&
-      other.sura_record == sura_record;
+
+    return other.id == id &&
+        other.student_id == student_id &&
+        other.file == file &&
+        other.surah_id == surah_id &&
+        other.from_ayah_id == from_ayah_id &&
+        other.to_ayah_id == to_ayah_id &&
+        other.studentaudio == studentaudio &&
+        other.sura_record == sura_record;
   }
 
   @override
   int get hashCode {
     return id.hashCode ^
-      student_id.hashCode ^
-      file.hashCode ^
-      surah_id.hashCode ^
-      from_ayah_id.hashCode ^
-      to_ayah_id.hashCode ^
-      studentaudio.hashCode ^
-      sura_record.hashCode;
+        student_id.hashCode ^
+        file.hashCode ^
+        surah_id.hashCode ^
+        from_ayah_id.hashCode ^
+        to_ayah_id.hashCode ^
+        studentaudio.hashCode ^
+        sura_record.hashCode;
   }
 }
