@@ -7,15 +7,24 @@ import 'package:teacher/features/lessons/data/model/student_model.dart';
 import 'package:teacher/features/lessons/presentation/bloc/lesson_bloc.dart';
 import 'package:teacher/features/lessons/presentation/bloc/lesson_event.dart';
 import 'package:teacher/features/lessons/presentation/bloc/lesson_state.dart';
+import 'package:url_launcher/url_launcher.dart';
 import '../../../../core/enums/controller_status.dart';
 import '../../../../core/resource/assets_manager.dart';
 import '../../../../core/resource/services_locator.dart';
 import '../../../../core/widgets/custom_appbar.dart';
 import '../../../../core/widgets/green_container.dart';
+import '../widgets/cup_Container_widgets.dart';
 
 class Homepage extends StatelessWidget {
   const Homepage({super.key});
-
+  Future<void> _openWebsite(String url) async {
+    final Uri uri = Uri.parse(url);
+    if (await canLaunchUrl(uri)) {
+      await launchUrl(uri, mode: LaunchMode.externalApplication);
+    } else {
+      debugPrint("تعذر فتح الرابط: $url");
+    }
+  }
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -30,7 +39,7 @@ class Homepage extends StatelessWidget {
                 decoration: BoxDecoration(
                   image: DecorationImage(
                     image: AssetImage(ImagesManager.component),
-                    fit: BoxFit.cover,
+                    fit: BoxFit.fill,
                   ),
                 ),
                 width: double.infinity,
@@ -65,27 +74,29 @@ class Homepage extends StatelessWidget {
                               ),
                             ],
                           ),
-
-
                         ],
                       ),
                       // Left side icons
                       Row(
                         children: [
-                          _buildIcon(Icons.menu),
+                          _buildIcon(Icons.menu,onTap: (){
+                            AppNavigator.instance.push(name: RouteConst.drawer);
+                          }),
                           SizedBox(width: 10),
                           _buildIcon(Icons.search),
                           SizedBox(width: 10),
-                          _buildIcon(Icons.emoji_events),
+                          _buildIcon(Icons.emoji_events,onTap: (){
+                            _openWebsite("https://teacherchallenges-40c16.web.app");
+                          }),
                           // example for trophy/award icon
                         ],
                       ),
                       // Right side profile info
-
                     ],
                   ),
                 ),
               ),
+
               BlocBuilder<LessonBloc, LessonState>(
                 builder: (context, state) {
                   if (state.fetchLessonStatus == ControllerStatus.loading) {
@@ -98,6 +109,7 @@ class Homepage extends StatelessWidget {
                     return state.circles.isEmpty
                         ? Center(child: Text("لا يوجد حلقات لك هنا"))
                         : GridView.builder(
+                            padding: EdgeInsets.zero,
                             shrinkWrap: true,
                             physics: NeverScrollableScrollPhysics(),
                             gridDelegate:
@@ -225,14 +237,18 @@ class Homepage extends StatelessWidget {
     );
   }
 
-  Widget _buildIcon(IconData icon) {
-    return Container(
-      padding: EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.8),
-        shape: BoxShape.circle,
+  Widget _buildIcon(IconData icon, {VoidCallback? onTap}) {
+    return InkWell(
+      onTap: onTap, // هنا تمرير التابع
+      child: Container(
+        padding: EdgeInsets.all(8),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.8),
+          shape: BoxShape.circle,
+        ),
+        child: Icon(icon, color: Colors.grey[700]),
       ),
-      child: Icon(icon, color: Colors.grey[700]),
     );
   }
+
 }

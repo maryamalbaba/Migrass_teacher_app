@@ -20,9 +20,12 @@ class ImagesManager {
   static const String waveContainer = "assets/images/waveContainer.png";
   static String tower = "assets/images/Tower.png";
   static const String iconmsg = "assets/images/iconmsg.png";
+  static  String cup = "assets/images/44808e7332c4ba98dab83932e0db72c5-removebg-preview 1.png";
+  static  String cupContainer = "assets/images/Frame 33817.png";
 
   static String listengcute_image = "assets/images/cuteListening.png";
   static String sessionPageBack = "assets/images/Frame 33892.png";
+  static String drawer = "assets/images/drawer.png";
 
   static String signInPage = "assets/images/signIn.jpeg";
   static String downCloude = "assets/images/downColude.png";
