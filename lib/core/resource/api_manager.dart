@@ -15,12 +15,13 @@ class ApiManager {
   static String HadithHistoryApi = "hadith-recitation/showAll/";
 
   static String QuranHistoryApi = "quran-recitation/showAll/";
-static String talqeenHistoryApi = "talkeen-recitation/showAll/";
-
+  static String talqeenHistoryApi = "talkeen-recitation/showAll/";
 
   static String hadithbookApi = "hadith-book/getAllBook";
 
   static String HadithCreateApi = "hadith-recitation/create";
   static String QuranCreateApi = "quran-recitation/create";
   static String TalqeenCreateApi = "talkeen-recitation/create";
+
+  static String GetaudiApi = "UserAudio/getAllAudiosForTeacher";
 }

@@ -22,7 +22,7 @@ void main() async {
   await SharedPreferencesManger.instance.initSharedPreferences();
   await FlutterLocalization.instance.ensureInitialized();
   ServicesLocator().init();
-  //await SharedPreferencesManger.instance.remove(SharedPreferencesKeys.token);
+  await SharedPreferencesManger.instance.remove(SharedPreferencesKeys.token);
   runApp(const MyApp());
 }
 
