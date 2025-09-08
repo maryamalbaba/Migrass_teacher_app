@@ -1,6 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:teacher/core/resource/navigator_manager.dart';
 
 import 'package:teacher/features/StudenTtasmi3/data/Models/SuraModel.dart';
 import 'package:teacher/features/StudenTtasmi3/data/repository/repoImp.dart';
@@ -59,6 +60,12 @@ class _talqeeentInputUiState extends State<talqeeentInputUi> {
       child: BlocBuilder<SuraBloc, SuraState>(
         builder: (context, state) {
           return Scaffold(
+            appBar: AppBar(
+              backgroundColor: const Color(0xFFD9EAD3),
+              leading: IconButton(onPressed: (){
+                AppNavigator.instance.pop();
+              }, icon: Icon(Icons.arrow_back)),
+            ),
             backgroundColor: const Color(0xFFD9EAD3),
             body: SafeArea(
               child: Column(
