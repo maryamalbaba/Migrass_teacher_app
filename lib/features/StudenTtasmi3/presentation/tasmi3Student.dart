@@ -2,6 +2,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import 'package:teacher/core/resource/navigator_manager.dart';
+import 'package:teacher/core/resource/route_const.dart';
 import 'package:teacher/features/StudenTtasmi3/data/Models/SuraModel.dart';
 import 'package:teacher/features/StudenTtasmi3/data/repository/repoImp.dart';
 import 'package:teacher/features/StudenTtasmi3/data/source/local.dart';
@@ -19,11 +21,14 @@ import 'package:teacher/features/sendtasmi3/create_quran_tasmi3/presentation/blo
 class Tasmi3StudentInputUi extends StatefulWidget {
   final num sessionid;
   final num studentid;
-
+  final num circleId;
+  final String circleType;
   const Tasmi3StudentInputUi({
     Key? key,
     required this.sessionid,
     required this.studentid,
+    required this.circleId,
+    required this.circleType,
   }) : super(key: key);
 
   @override
@@ -58,6 +63,14 @@ class _Tasmi3StudentInputUiState extends State<Tasmi3StudentInputUi> {
       child: BlocBuilder<SuraBloc, SuraState>(
         builder: (context, state) {
           return Scaffold(
+            appBar: AppBar(
+              backgroundColor: const Color(0xFFD9EAD3),
+              leading: IconButton(
+                  onPressed: () {
+                    AppNavigator.instance.pop();
+                  },
+                  icon: Icon(Icons.arrow_back)),
+            ),
             backgroundColor: const Color(0xFFD9EAD3),
             body: SafeArea(
               child: Column(
@@ -124,7 +137,7 @@ class _Tasmi3StudentInputUiState extends State<Tasmi3StudentInputUi> {
                                     if (state is GetSuraSucess &&
                                         selectedSura1 != null) {
                                       // جيب السورة المختارة
-                                       final sura = selectedSura1!;
+                                      final sura = selectedSura1!;
 
                                       // اعمل ليست من 1 الى عدد آيات السورة
                                       final ayaList = List.generate(
@@ -238,14 +251,15 @@ class _Tasmi3StudentInputUiState extends State<Tasmi3StudentInputUi> {
                                     const SnackBar(
                                         content: Text("تم الإرسال بنجاح ")),
                                   );
-                                } else if(state is SendTasmi3Loading) {
+                                } else if (state is SendTasmi3Loading) {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(content: Text(" يتم الارسال ")),
                                   );
-                                }
-                                else{
-                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(content: Text(" حصل خطأ ..انتبه على ترتيب السور والايات")),
+                                } else {
+                                  ScaffoldMessenger.of(context).showSnackBar(
+                                    SnackBar(
+                                        content: Text(
+                                            " حصل خطأ ..انتبه على ترتيب السور والايات")),
                                   );
                                 }
                               },
@@ -267,8 +281,7 @@ class _Tasmi3StudentInputUiState extends State<Tasmi3StudentInputUi> {
                                       student_id: widget.studentid,
                                       from_sura_id: selectedSura1!.id,
                                       from_verse: int.parse(selectedAya1!),
-                                      to_sura_id: selectedSura2!
-                                          .id, 
+                                      to_sura_id: selectedSura2!.id,
                                       to_verse: int.parse(selectedAya2!),
                                       is_counted: iscounted,
                                       is_exam: isExsam,

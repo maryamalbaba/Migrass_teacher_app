@@ -27,4 +27,9 @@ class ApiManager {
   static String TalqeenCreateApi = "talkeen-recitation/create";
 
   static String GetaudiApi = "UserAudio/getAllAudiosForTeacher";
+
+  
+
+  static String valuerRcord = "UserAudio/comment/";
+
 }

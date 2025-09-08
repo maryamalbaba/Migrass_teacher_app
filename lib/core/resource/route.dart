@@ -40,7 +40,10 @@ class AppRoutes {
       case RouteConst.login:
         return MaterialPageRoute(builder: (_) => const SignInPage());
       case RouteConst.attendance:
-        return MaterialPageRoute(builder: (_) => AttendancePage(sessionId: args as int,));
+        return MaterialPageRoute(
+            builder: (_) => AttendancePage(
+                  sessionId: args as int,
+                ));
       case RouteConst.home:
         return MaterialPageRoute(builder: (_) => tasmi3UI());
       case RouteConst.drawer:
@@ -55,7 +58,7 @@ class AppRoutes {
       case RouteConst.marks:
         return MaterialPageRoute(
             builder: (_) => MarkPage(
-             examModel: args as ExamModel,
+                  examModel: args as ExamModel,
                 ));
       case RouteConst.session:
         return MaterialPageRoute(
@@ -65,11 +68,11 @@ class AppRoutes {
       case RouteConst.CoreUi:
         return MaterialPageRoute(builder: (_) => CoreUi());
 
-      // case RouteConst.Tasmi3SessionUi:
-      //   return MaterialPageRoute(
-      //       builder: (_) => Tasmi3SessionUi(
-      //             id: args as int,
-      //           ));
+        // case RouteConst.Tasmi3SessionUi:
+        //   return MaterialPageRoute(
+        //       builder: (_) => Tasmi3SessionUi(
+        //             id: args as int,
+        //           ));
         return MaterialPageRoute(builder: (_) => tasmi3UI());
       case RouteConst.CoreUi:
         return MaterialPageRoute(builder: (_) => CoreUi());
@@ -78,7 +81,9 @@ class AppRoutes {
 
         return MaterialPageRoute(
             builder: (_) => Tasmi3SessionUi(
-                id: args[0] as int, CircleName: args[1], CircleType: args[2]));
+                circle_id: args[0] as int,
+                CircleName: args[1],
+                CircleType: args[2]));
 
         return MaterialPageRoute(builder: (_) => tasmi3UI());
 
@@ -87,20 +92,30 @@ class AppRoutes {
 
       case RouteConst.ShowStudentUi:
         final args = settings.arguments as List;
-        final id1 = args[0];
+        final circlid = args[0];
         final circleType = args[1];
-        final sessionid=args[2];
+        final sessionid = args[2];
         return MaterialPageRoute(
             builder: (_) => ShowStudentUi(
-                  id: id1,
-                  circleType: circleType, sessionid: sessionid,
+                  circleId: circlid,
+                  circleType: circleType,
+                  sessionid: sessionid,
                 ));
 
       case RouteConst.Tasmi3StudentInputUi:
         final args = settings.arguments as List;
         final sessionid = args[0];
         final studentid = args[1];
-        return MaterialPageRoute(builder: (_) => Tasmi3StudentInputUi(sessionid: sessionid, studentid: studentid,));
+        final num circleId = args[2];
+        final String circleType = args[3];
+
+        return MaterialPageRoute(
+            builder: (_) => Tasmi3StudentInputUi(
+                  sessionid: sessionid,
+                  studentid: studentid,
+                  circleId: circleId,
+                  circleType: circleType,
+                ));
 
       case RouteConst.StudentHistoryUi:
         final args = settings.arguments as List;
@@ -109,14 +124,19 @@ class AppRoutes {
             studentid: args[0],
             type: args[1],
             sessionid: args[2],
+            circl_id: args[3],
           ),
         );
 
-        case RouteConst.talqeeentInputUi:
+      case RouteConst.talqeeentInputUi:
         final args = settings.arguments as List;
         final sessionid = args[0];
         final studentid = args[1];
-        return MaterialPageRoute(builder: (_)=>talqeeentInputUi(sessionid:sessionid , studentid: studentid,));
+        return MaterialPageRoute(
+            builder: (_) => talqeeentInputUi(
+                  sessionid: sessionid,
+                  studentid: studentid,
+                ));
       case RouteConst.HadithScreen:
         final args = settings.arguments as List;
         return MaterialPageRoute(

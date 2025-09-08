@@ -13,23 +13,31 @@ abstract class BaseSessionRemoteDataSource{
 
 class SessionDataSource extends BaseSessionRemoteDataSource {
  @override
- Future<Either<String?, List<SessionModel>>> getSession(int circleId) async {
+
+
+Future<Either<String?, List<SessionModel>>> getSession(int circleId) async {
   final result = await ApiService.instance.makeRequest(
-   method: ApiMethod.get,
-   endPoint: ApiManager.session+circleId.toString(),
+    method: ApiMethod.get,
+    endPoint: ApiManager.session + circleId.toString(),
   );
 
   return result.fold(
-       (l) => Left(l.toString()),
-       (r) =>
-       Right(
-        List<SessionModel>.from(
-         (r['data'] as List).map((e) => SessionModel.fromJson(e)),
-        ),
-       ),
-  );
- }
+    (l) => Left(l.toString()),
+    (r) {
+      final sessions = r['data'] ?? r['date']; // جرب الاثنين (حسب الـ API)
+      
+      if (sessions == null || sessions is! List) {
+        return const Right([]); // رجع List فاضية إذا مافي بيانات
+      }
 
+      return Right(
+        List<SessionModel>.from(
+          sessions.map((e) => SessionModel.fromJson(e)),
+        ),
+      );
+    },
+  );
+}
  @override
  Future<Either<String?, dynamic>> createSession(int circleId,
      SessionRequestModel session) async {
