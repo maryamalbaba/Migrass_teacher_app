@@ -39,9 +39,7 @@ class _tasmi3UIState extends State<tasmi3UI> {
       create: (context) => Tasmi3GroupBloc(GetAllTasmi3GroupUseCase(
           repo: Tasmi3groupRepoImpl(
               locaTasmi3groupDataSource: LocalTasmi3groupDataSource(),
-              networkConnection: NetworkConnection2(
-                connectivity: Connectivity(),
-              ),
+              networkMonitor: NetworkMonitor(checker: InternetConnectionChecker.createInstance(),connectivity: Connectivity()),
               remoteTasmi3groupDataSource: RemoteTasmi3groupDataSource())))
         ..add(GetTsmi3CircleTeacherEvent()),
       child: BlocBuilder<Tasmi3GroupBloc, Tasmi3GroupState>(
@@ -173,7 +171,7 @@ class _tasmi3UIState extends State<tasmi3UI> {
               ),
             );
           } else if (state is ErrorTasmi3GroupeState) {
-            return Text(state.e.message);
+            return Center(child: Text(state.e.message));
           } else {
             return Center(
               child: CircularProgressIndicator(),
