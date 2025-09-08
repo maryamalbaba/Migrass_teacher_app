@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:teacher/core/enums/shared_preferences_keys.dart';
 import 'package:teacher/core/resource/colors_manager.dart';
 import 'package:teacher/core/resource/navigator_manager.dart';
 import 'package:teacher/core/resource/route_const.dart';
@@ -8,6 +9,7 @@ import 'package:teacher/features/lessons/presentation/bloc/lesson_bloc.dart';
 import 'package:teacher/features/lessons/presentation/bloc/lesson_event.dart';
 import 'package:teacher/features/lessons/presentation/bloc/lesson_state.dart';
 import 'package:url_launcher/url_launcher.dart';
+import '../../../../core/config/sharedPreferences_manager.dart';
 import '../../../../core/enums/controller_status.dart';
 import '../../../../core/resource/assets_manager.dart';
 import '../../../../core/resource/services_locator.dart';
@@ -25,6 +27,8 @@ class Homepage extends StatelessWidget {
       debugPrint("تعذر فتح الرابط: $url");
     }
   }
+
+
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
@@ -57,20 +61,28 @@ class Homepage extends StatelessWidget {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                'ا.سوزان عبيد',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.bold,
-                                  fontSize: 16,
-                                  color: Colors.white,
-                                ),
-                              ),
-                              Text(
-                                'جامع عمر بن عبد العزيز',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  color: Colors.white,
-                                ),
+                              Row(
+                                children: [
+                                  Text(
+                                  SharedPreferencesManger.instance.getString(SharedPreferencesKeys.firstName)??'',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                    ),
+
+                                  ),
+                                  SizedBox(width: 3,),
+                                  Text(
+                                   SharedPreferencesManger.instance.getString(SharedPreferencesKeys.lastName)??'',
+                                    style: TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                      color: Colors.white,
+                                    ),
+
+                                  ),
+                                ],
                               ),
                             ],
                           ),
@@ -82,8 +94,6 @@ class Homepage extends StatelessWidget {
                           _buildIcon(Icons.menu,onTap: (){
                             AppNavigator.instance.push(name: RouteConst.drawer);
                           }),
-                          SizedBox(width: 10),
-                          _buildIcon(Icons.search),
                           SizedBox(width: 10),
                           _buildIcon(Icons.emoji_events,onTap: (){
                             _openWebsite("https://teacherchallenges-40c16.web.app");

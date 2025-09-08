@@ -1,6 +1,6 @@
 import 'package:dartz/dartz.dart';
 import 'package:teacher/features/exam/data/model/exam_model.dart';
-import 'package:teacher/features/exam/data/model/mark_model.dart';
+import 'package:teacher/features/marks/data/model/mark_model.dart';
 import 'package:teacher/features/session_lesson/data/model/session_model.dart';
 
 import '../../../../core/api/api_service.dart';
@@ -19,19 +19,25 @@ class ExamDataSource extends BaseExamRemoteDataSource {
   Future<Either<String?, List<ExamModel>>> getExam(int circleId) async {
     final result = await ApiService.instance.makeRequest(
       method: ApiMethod.get,
-      endPoint: ApiManager.exam+'getAll/'+circleId.toString(),
+      endPoint: ApiManager.exam + 'getAll/' + circleId.toString(),
     );
 
     return result.fold(
           (l) => Left(l.toString()),
-          (r) =>
-          Right(
+          (r) {
+        if (r['data'] != null && r['data'] is List) {
+          return Right(
             List<ExamModel>.from(
               (r['data'] as List).map((e) => ExamModel.fromJson(e)),
             ),
-          ),
+          );
+        } else {
+          return const Right([]);
+        }
+      },
     );
   }
+
 
   @override
   Future<Either<String?, dynamic>> createExam(int circleId,

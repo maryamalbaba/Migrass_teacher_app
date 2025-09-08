@@ -2,7 +2,7 @@ import 'package:dartz/dartz.dart';
 import 'package:teacher/features/session_lesson/data/model/session_model.dart';
 
 import '../../data/model/exam_model.dart';
-import '../../data/model/mark_model.dart';
+import '../../../marks/data/model/mark_model.dart';
 
 abstract class BaseExamRepository {
   Future<Either<String?, List<ExamModel>>> getExam(int circleId);

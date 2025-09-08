@@ -1,7 +1,7 @@
 import 'package:dartz/dartz.dart';
 import 'package:teacher/features/exam/data/data_source/exam_data_source.dart';
 import 'package:teacher/features/exam/data/model/exam_model.dart';
-import 'package:teacher/features/exam/data/model/mark_model.dart';
+import 'package:teacher/features/marks/data/model/mark_model.dart';
 import '../../domain/repository/base_exam_repository.dart';
 
 class ExamRepository extends BaseExamRepository {

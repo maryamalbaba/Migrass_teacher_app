@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:teacher/core/widgets/appbar.dart';
 import 'package:teacher/features/lessons/presentation/bloc/lesson_bloc.dart';
 import 'package:teacher/features/lessons/presentation/bloc/lesson_event.dart';
 import 'package:teacher/features/lessons/presentation/bloc/lesson_state.dart';
@@ -20,11 +21,12 @@ class CircleExamPage extends StatelessWidget {
     return BlocProvider(
       create: (context) => LessonBloc(sl())..add(FetchLesson()),
       child: Scaffold(
+        appBar:               SoftAppBar(title: 'المواد ', ),
+
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              CustomAppbar(title: 'المواد ', showBackButton: true),
               const SizedBox(height: 80),
               Expanded(
                 child: BlocBuilder<LessonBloc, LessonState>(

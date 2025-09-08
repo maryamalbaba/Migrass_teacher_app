@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:teacher/features/exam/data/model/exam_model.dart';
 
-import '../../data/model/mark_model.dart';
+import '../../../marks/data/model/mark_model.dart';
 
 abstract class ExamEvent extends Equatable {
   const ExamEvent();
