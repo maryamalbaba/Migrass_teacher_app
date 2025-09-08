@@ -25,6 +25,15 @@
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
+
+                <!-- السماح بفتح روابط http -->
+                <data android:scheme="http" />
+
+                <!-- السماح بفتح روابط https -->
+                <data android:scheme="https" />
+
+                <!-- السماح بفتح روابط YouTube -->
+                <data android:scheme="youtube" />
             </intent-filter>
         </activity>
         <!-- Don't delete the meta-data below.
