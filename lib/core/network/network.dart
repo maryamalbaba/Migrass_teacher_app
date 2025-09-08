@@ -23,3 +23,26 @@ class NetworkConnection2{
     return result != ConnectivityResult.none;
   }
 }
+
+
+
+class NetworkMonitor {
+  final Connectivity _connectivity;
+  final InternetConnectionChecker _checker;
+
+  NetworkMonitor({
+    Connectivity? connectivity,
+    InternetConnectionChecker? checker,
+  })  : _connectivity = connectivity ?? Connectivity(),
+        _checker = checker ?? InternetConnectionChecker.instance;
+
+  Future<bool> get isConnected async {
+    final connectivityResult = await _connectivity.checkConnectivity();
+
+    if (connectivityResult == ConnectivityResult.none) {
+      return false; // ما في شبكة أصلاً
+    }
+
+    return await _checker.hasConnection; // شبكة موجودة → تأكد من الإنترنت
+  }
+}

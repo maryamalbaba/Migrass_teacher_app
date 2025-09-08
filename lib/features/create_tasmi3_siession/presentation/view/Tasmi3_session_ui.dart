@@ -74,9 +74,7 @@ class _Tasmi3SessionUiState extends State<Tasmi3SessionUi> {
               repo: SessionRepoImpl(
                 remoteSessionDataSource: RemoteSessionDataSource(),
                 localSessionDataSource: LocalSessionDataSource(),
-                networkConnection: NetworkConnection2(
-                 connectivity: Connectivity()
-                ),
+                 networkMonitor: NetworkMonitor(connectivity: Connectivity(),checker: InternetConnectionChecker.createInstance()),
               ),
             ),
           )..add(getSessionEvent(id: widget.circle_id)),
