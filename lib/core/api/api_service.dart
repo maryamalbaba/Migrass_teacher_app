@@ -75,7 +75,7 @@ class ApiService {
     _dio.options = _dio.options.copyWith(method: method.value);
     _dio.options.headers = getHeaders;
     if (headers != null) _dio.options.headers.addAll(headers);
-
+print(headers);
     try {
       final response = await _dio.request(endPoint, data: formData ?? body);
       final apiResponse = handleApiError(response, showSnackBarOnError);

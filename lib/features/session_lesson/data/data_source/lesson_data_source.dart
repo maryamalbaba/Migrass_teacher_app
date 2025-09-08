@@ -24,10 +24,10 @@ Future<Either<String?, List<SessionModel>>> getSession(int circleId) async {
   return result.fold(
     (l) => Left(l.toString()),
     (r) {
-      final sessions = r['data'] ?? r['date']; // جرب الاثنين (حسب الـ API)
-      
+      final sessions = r['data'] ?? r['date'];
+
       if (sessions == null || sessions is! List) {
-        return const Right([]); // رجع List فاضية إذا مافي بيانات
+        return const Right([]);
       }
 
       return Right(
@@ -35,6 +35,7 @@ Future<Either<String?, List<SessionModel>>> getSession(int circleId) async {
           sessions.map((e) => SessionModel.fromJson(e)),
         ),
       );
+
     },
   );
 }
