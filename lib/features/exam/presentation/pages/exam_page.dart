@@ -5,6 +5,7 @@ import 'package:teacher/core/resource/assets_manager.dart';
 import 'package:teacher/core/resource/navigator_manager.dart';
 import 'package:teacher/core/resource/route_const.dart';
 import 'package:teacher/core/resource/services_locator.dart';
+import 'package:teacher/core/widgets/appbar.dart';
 import 'package:teacher/core/widgets/custom_appbar.dart';
 import 'package:teacher/core/resource/colors_manager.dart';
 import 'package:teacher/features/exam/data/model/exam_model.dart';
@@ -30,7 +31,7 @@ class ExamPage extends StatelessWidget {
           children: [
             Container(
               height: 180,
-              padding: const EdgeInsets.all(20),
+              padding: const EdgeInsets.symmetric(horizontal: 20),
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage(ImagesManager.greenBcak),
@@ -38,7 +39,7 @@ class ExamPage extends StatelessWidget {
                 ),
               ),
               width: double.infinity,
-              child: const CustomAppbar(title: 'الامتحانات'),
+              child: const SoftAppBar(title: 'الامتحانات',backgroundColor: Colors.transparent,),
             ),
             Expanded(
               child: Container(

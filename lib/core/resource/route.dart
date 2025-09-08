@@ -8,7 +8,7 @@ import 'package:teacher/features/auth/view/pages/signin_page.dart';
 import 'package:teacher/features/exam/data/model/exam_model.dart';
 import 'package:teacher/features/exam/presentation/pages/circle_exam_page.dart';
 import 'package:teacher/features/exam/presentation/pages/exam_page.dart';
-import 'package:teacher/features/exam/presentation/pages/mark_page.dart';
+import 'package:teacher/features/marks/presentation/pages/mark_page.dart';
 import 'package:teacher/features/getbookhadith/presentation/view/hdithui.dart';
 import 'package:teacher/features/input_talqeen/input_talqeen.dart';
 import 'package:teacher/features/session_lesson/view/pages/session_page.dart';

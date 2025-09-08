@@ -1,11 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:teacher/core/config/sharedPreferences_manager.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:teacher/core/resource/colors_manager.dart';
 import 'package:teacher/core/resource/navigator_manager.dart';
 import 'package:teacher/core/resource/route_const.dart';
 import 'package:teacher/core/widgets/custom_appbar.dart';
 
+import '../../core/enums/shared_preferences_keys.dart';
 import '../../core/resource/assets_manager.dart';
 
 class DrawerPage extends StatelessWidget {
@@ -32,7 +34,10 @@ class DrawerPage extends StatelessWidget {
         ),
         child: ListView(
           children: [
-            CustomAppbar(title: '',showBackButton: true,),
+            CustomAppbar(
+              title: '',
+              showBackButton: true,
+            ),
             SizedBox(
               height: 250,
             ),
@@ -55,7 +60,6 @@ class DrawerPage extends StatelessWidget {
               icon: Icons.insert_drive_file_outlined,
               onTap: () {
                 AppNavigator.instance.push(name: RouteConst.circleExam);
-
               },
             ),
             const SizedBox(height: 16),
@@ -63,6 +67,16 @@ class DrawerPage extends StatelessWidget {
               title: 'شارك التطبيق',
               icon: Icons.reply, // السهم للخلف
               onTap: () {},
+            ),
+            const SizedBox(height: 16),
+            MenuPill(
+              title: 'تسجيل خروج ',
+              icon: Icons.reply, // السهم للخلف
+              onTap: () {
+                SharedPreferencesManger.instance
+                    .remove(SharedPreferencesKeys.token);
+                AppNavigator.instance.push(name: RouteConst.splash);
+              },
             ),
           ],
         ),
@@ -98,17 +112,18 @@ class MenuPill extends StatelessWidget {
           onTap: onTap,
           child: ConstrainedBox(
             constraints: const BoxConstraints(minHeight: 68),
-            child: Directionality( // يضمن محاذاة RTL
+            child: Directionality(
+              // يضمن محاذاة RTL
               textDirection: TextDirection.rtl,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 14),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const SizedBox(width: 12),
                     Icon(icon, size: 28, color: const Color(0xFF6D6D6D)),
                     const SizedBox(width: 12),
-
                     Text(
                       title,
                       textAlign: TextAlign.right,
@@ -118,7 +133,6 @@ class MenuPill extends StatelessWidget {
                         color: Color(0xFF4A4A4A),
                       ),
                     ),
-
                   ],
                 ),
               ),

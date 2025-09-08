@@ -36,7 +36,7 @@ class SoftAppBar extends StatelessWidget implements PreferredSizeWidget {
               Expanded(
                 child: Text(
                   title,
-                  textAlign: TextAlign.center,
+                  textAlign: TextAlign.start,
                   style: const TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.w600,

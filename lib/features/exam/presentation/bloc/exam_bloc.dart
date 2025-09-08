@@ -51,13 +51,15 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:teacher/core/error/Error_model.dart';
 import 'package:teacher/features/exam/data/model/exam_model.dart';
-import 'package:teacher/features/exam/data/model/mark_model.dart';
+import 'package:teacher/features/marks/data/model/mark_model.dart';
 import 'package:teacher/features/exam/domain/usecases/add_exam_usecase.dart';
 import 'package:teacher/features/exam/domain/usecases/get_exam_usecase.dart';
 import 'package:teacher/features/exam/domain/usecases/update_exam_usecase.dart';
 import 'package:teacher/features/exam/domain/usecases/add_marks_usecase.dart'; // NEW
 import 'package:teacher/features/exam/presentation/bloc/exam_event.dart';
 import 'package:teacher/features/exam/presentation/bloc/exam_state.dart';
+
+import '../../../marks/domain/usecase/get_mark_usecase.dart';
 
 class ExamBloc extends Bloc<ExamEvent, ExamState> {
   final GetExamUsecase getExamUsecase;

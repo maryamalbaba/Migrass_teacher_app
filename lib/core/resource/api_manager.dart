@@ -1,7 +1,6 @@
 class ApiManager {
-  // http://localhost:4000/api/'
-   
-  static String baseUrl ="https://api.devscape.online/api/";
+  static String baseUrl = 'https://api.devscape.online/api/';
+  // static String baseUrl = 'http://localhost:4000/api/';
   static String login = "auth/login";
   static String lesson = "circle/showCircleTypeForTeacher_dars";
   static String session = "LessonSession/GetAllSessionesLession/";

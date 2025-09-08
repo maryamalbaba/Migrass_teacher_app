@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:teacher/core/resource/colors_manager.dart';
 import 'package:teacher/core/widgets/appbar.dart';
 import '../../../../core/resource/services_locator.dart';
 import '../bloc/attendance_bloc.dart';
@@ -26,7 +27,7 @@ class AttendancePage extends StatelessWidget {
       create: (_) => AttendanceBloc(sl(), sl())
         ..add(AttendanceLoad(sessionId)), // ← اطلق الحدث هنا
       child: Scaffold(
-        appBar: SoftAppBar(title: "الطلاب"),
+        appBar: SoftAppBar(title: "الحضور"),
         body: BlocConsumer<AttendanceBloc, AttendanceState>(
           listener: (context, state) {
             if (state is AttendanceLoaded && state.submitMessage != null) {
@@ -77,30 +78,41 @@ class AttendancePage extends StatelessWidget {
                     ),
                   ),
                   Padding(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 12),
+                    padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 30),
                     child: SizedBox(
-                      width: double.infinity,
+                      width: 250, // العرض
+                      height: 50, // الطول (تقدر تعدله)
                       child: ElevatedButton.icon(
+                        style: ElevatedButton.styleFrom(
+                          backgroundColor: lightGreen1, // اللون الأساسي
+                          foregroundColor: Colors.white, // لون النص والأيقونة
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(30), // الزوايا
+                          ),
+                        ),
                         onPressed: state.isSubmitting
                             ? null
                             : () => context
-                                .read<AttendanceBloc>()
-                                .add(const AttendanceSubmit()),
+                            .read<AttendanceBloc>()
+                            .add(const AttendanceSubmit()),
                         icon: state.isSubmitting
                             ? const SizedBox(
-                                width: 18,
-                                height: 18,
-                                child:
-                                    CircularProgressIndicator(strokeWidth: 2),
-                              )
+                          width: 18,
+                          height: 18,
+                          child: CircularProgressIndicator(
+                            strokeWidth: 2,
+                            color: Colors.white,
+                          ),
+                        )
                             : const Icon(Icons.save),
-                        label: Text(state.isSubmitting
-                            ? 'جارٍ الحفظ...'
-                            : 'حفظ التغييرات'),
+                        label: Text(
+                          state.isSubmitting ? 'جارٍ الحفظ...' : 'حفظ التغييرات',
+                          style: const TextStyle(fontSize: 16),
+                        ),
                       ),
                     ),
-                  ),
+                  )
+
                 ],
               );
             }
@@ -158,13 +170,14 @@ class AttendanceItemTile extends StatelessWidget {
           ),
           _StatusChip(present: present),
           const SizedBox(width: 10),
-          _squareIconButton(
-            icon: Icons.edit,
-            onTap: onEdit,
-          ),
+          // _squareIconButton(
+          //   icon: Icons.edit,
+          //   onTap: onEdit,
+          // ),
           const SizedBox(width: 6),
           _squareIconButton(
-            icon: Icons.check,
+            icon:present? Icons.check:Icons.close
+            ,
             onTap: onTogglePresent,
           ),
         ],
@@ -194,7 +207,7 @@ class AttendanceItemTile extends StatelessWidget {
               ),
             ],
           ),
-          child: Icon(icon, size: 18, color: Colors.green),
+          child: Icon(icon, size: 18, color:icon==Icons.check? Colors.green:Colors.red),
         ),
       ),
     );

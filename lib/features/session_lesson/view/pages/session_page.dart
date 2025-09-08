@@ -5,6 +5,7 @@ import 'package:teacher/core/resource/assets_manager.dart';
 import 'package:teacher/core/resource/navigator_manager.dart';
 import 'package:teacher/core/resource/route_const.dart';
 import 'package:teacher/core/resource/services_locator.dart';
+import 'package:teacher/core/widgets/appbar.dart';
 import 'package:teacher/core/widgets/custom_appbar.dart';
 import 'package:teacher/features/session_lesson/data/model/session_model.dart';
 import 'package:teacher/core/enums/controller_status.dart';
@@ -40,7 +41,13 @@ class SessionPage extends StatelessWidget {
                 ),
               ),
               width: double.infinity,
-              child: CustomAppbar(title: 'الدروس'),
+              child: Align(
+                alignment: Alignment.topRight ,
+                child: SoftAppBar(
+                  title: 'الدروس',
+                  backgroundColor: Colors.transparent,
+                ),
+              ),
             ),
             Expanded(
               child: Container(
@@ -73,8 +80,9 @@ class SessionPage extends StatelessWidget {
                             title: session.title,
                             subtitle: session.description,
                             onTap: () {
-                              AppNavigator.instance
-                                  .push(name: RouteConst.attendance,extra: session.id);
+                              AppNavigator.instance.push(
+                                  name: RouteConst.attendance,
+                                  extra: session.id);
                             },
                           );
                         },

@@ -4,6 +4,7 @@ class MarkModel extends Equatable {
   final int id;
   final int examId;
   final int studentId;
+  final String studentName;
   final int score;
   final bool hasTakenExam;
   final String notes;
@@ -17,20 +18,19 @@ class MarkModel extends Equatable {
     this.score = 0,
     this.hasTakenExam = false,
     this.notes = '',
+    this.studentName = '',
      this.updatedAt='',
      this.createdAt='',
   });
 
   factory MarkModel.fromJson(Map<String, dynamic> json) {
     return MarkModel(
-      id: json['id'] as int,
-      examId: json['exam_id'] as int,
-      studentId: json['student_id'] as int,
-      score: json['score'] as int,
+      studentId: json['IdStudent'] as int,
+      score: json['result_exam'] as int,
       hasTakenExam: json['has_taken_exam'] as bool,
       notes: json['notes'] as String,
-      updatedAt: json['updated_at'] as String,
-      createdAt: json['created_at'] as String,
+      studentName: (json['studentFirstName'] as String)+" " + (json['studentLastName'] as String),
+
     );
   }
 

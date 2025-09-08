@@ -14,6 +14,10 @@ import 'package:teacher/features/lessons/data/data_source/lesson_data_source.dar
 import 'package:teacher/features/lessons/data/repository/lesson_repository.dart';
 import 'package:teacher/features/lessons/domain/repository/base_lesson_repository.dart';
 import 'package:teacher/features/lessons/domain/usecases/get_lesson_usecase.dart';
+import 'package:teacher/features/marks/data/data_source/mark_data_source.dart';
+import 'package:teacher/features/marks/data/repository/mark_repository.dart';
+import 'package:teacher/features/marks/domain/repository/base_mark_repository.dart';
+import 'package:teacher/features/marks/domain/usecase/get_mark_usecase.dart';
 import 'package:teacher/features/session_lesson/data/data_source/lesson_data_source.dart';
 import 'package:teacher/features/session_lesson/data/repository/session_repository.dart';
 import 'package:teacher/features/session_lesson/domain/repository/base_session_repository.dart';
@@ -37,7 +41,6 @@ class ServicesLocator {
     sl.registerLazySingleton<GetExamUsecase>(() => GetExamUsecase(sl()));
     sl.registerLazySingleton<AddExamUsecase>(() => AddExamUsecase(sl()));
     sl.registerLazySingleton<UpdateExamUsecase>(() => UpdateExamUsecase(sl()));
-    sl.registerLazySingleton<AddMarksUsecase>(() => AddMarksUsecase(sl()));
     sl.registerLazySingleton<BaseExamRemoteDataSource>(
           () => ExamDataSource(),
     );
@@ -50,11 +53,22 @@ class ServicesLocator {
     sl.registerLazySingleton<GetAttendanceUsecase>(() => GetAttendanceUsecase(sl()));
     sl.registerLazySingleton<UpdateAttendanceUsecase>(() => UpdateAttendanceUsecase(sl()));
 
+
     sl.registerLazySingleton<BaseAttendanceRemoteDataSource>(
           () => AttendanceDataSource(),
     );
     sl.registerLazySingleton<BaseAttendanceRepository>(
           () => AttendanceRepository(sl()),
+    );
+    /// marks
+    sl.registerLazySingleton<GetMarkUsecase>(() => GetMarkUsecase(sl()));
+    sl.registerLazySingleton<AddMarksUsecase>(() => AddMarksUsecase(sl()));
+
+    sl.registerLazySingleton<BaseMarkRemoteDataSource>(
+          () => MarkDataSource()
+    );
+    sl.registerLazySingleton<BaseMarkRepository>(
+          () => MarkRepository(sl()),
     );
 
     /// session

@@ -4,7 +4,7 @@ import 'package:flutter/cupertino.dart';
 
 import '../../../../core/error/Error_model.dart';
 import '../../data/model/exam_model.dart';
-import '../../data/model/mark_model.dart';
+import '../../../marks/data/model/mark_model.dart';
 
 @immutable
 sealed class ExamState {}
