@@ -34,7 +34,6 @@ import 'package:teacher/features/get_session/domain/usecase/sessiontasmi3.dart';
 import 'package:teacher/features/get_session/presenture/bloc/tasmi3_session_bloc.dart';
 import 'package:teacher/features/get_session/presenture/view/SesionsTasmi3Ui.dart';
 import 'package:teacher/features/tasmi3/presentation/bloc/tasmi3_group_bloc.dart';
-
 class Tasmi3SessionUi extends StatefulWidget {
   Tasmi3SessionUi({
     Key? key,
@@ -43,7 +42,7 @@ class Tasmi3SessionUi extends StatefulWidget {
     required this.CircleType,
   }) : super(key: key);
   final num circle_id;
-  final  String CircleName;
+  final String CircleName;
   final String CircleType;
   @override
   State<Tasmi3SessionUi> createState() => _Tasmi3SessionUiState();
@@ -74,7 +73,10 @@ class _Tasmi3SessionUiState extends State<Tasmi3SessionUi> {
               repo: SessionRepoImpl(
                 remoteSessionDataSource: RemoteSessionDataSource(),
                 localSessionDataSource: LocalSessionDataSource(),
-                 networkMonitor: NetworkMonitor(connectivity: Connectivity(),checker: InternetConnectionChecker.createInstance()),
+                networkMonitor: NetworkMonitor(
+                  connectivity: Connectivity(),
+                  checker: InternetConnectionChecker.createInstance(),
+                ),
               ),
             ),
           )..add(getSessionEvent(id: widget.circle_id)),
@@ -140,8 +142,7 @@ class _Tasmi3SessionUiState extends State<Tasmi3SessionUi> {
                                             date = newDate;
                                           });
                                           setState(() {
-                                            date =
-                                                newDate; // Update parent state
+                                            date = newDate; // Update parent state
                                           });
                                         }
                                       },
@@ -153,8 +154,9 @@ class _Tasmi3SessionUiState extends State<Tasmi3SessionUi> {
                                 ElevatedButton(
                                   onPressed: () {
                                     Tasmi3Session session = Tasmi3Session(
-                                        circle_id: widget.circle_id,
-                                        date: date ?? today);
+                                      circle_id: widget.circle_id,
+                                      date: date ?? today,
+                                    );
 
                                     print(
                                         'Sending session: ${session.toJson()}');
@@ -221,14 +223,15 @@ class _Tasmi3SessionUiState extends State<Tasmi3SessionUi> {
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                       Text(
-                                       widget.CircleName,
+                                      Text(
+                                        widget.CircleName,
                                         style: TextStyle(fontSize: 15),
                                         maxLines: 1,
                                         overflow: TextOverflow.ellipsis,
                                       ),
                                       Text(
-                                        DateTime.now().toString(),
+                                        DateFormat('yyyy-MM-dd')
+                                            .format(DateTime.now()),
                                         style: const TextStyle(fontSize: 12),
                                         maxLines: 1,
                                       ),
@@ -242,11 +245,12 @@ class _Tasmi3SessionUiState extends State<Tasmi3SessionUi> {
                           Align(
                             alignment: Alignment.topLeft,
                             child: InkWell(
-                                onTap: () {
-                                  AppNavigator.instance
-                                      .push(name: RouteConst.CoreUi);
-                                },
-                                child: backContainer()),
+                              onTap: () {
+                                AppNavigator.instance
+                                    .push(name: RouteConst.CoreUi);
+                              },
+                              child: backContainer(),
+                            ),
                           ),
                         ],
                       ),
@@ -255,17 +259,19 @@ class _Tasmi3SessionUiState extends State<Tasmi3SessionUi> {
                 ),
                 Expanded(
                   child: Container(
-                      width: double.infinity,
-                      decoration: const BoxDecoration(
-                        color: Colors.white,
-                        borderRadius: BorderRadius.only(
-                          topLeft: Radius.circular(30),
-                          topRight: Radius.circular(30),
-                        ),
+                    width: double.infinity,
+                    decoration: const BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.only(
+                        topLeft: Radius.circular(30),
+                        topRight: Radius.circular(30),
                       ),
-                      child: SessionUi(
-                        circl_id: widget.circle_id, circleType: widget.CircleType,
-                      )),
+                    ),
+                    child: SessionUi(
+                      circl_id: widget.circle_id,
+                      circleType: widget.CircleType,
+                    ),
+                  ),
                 )
               ]),
             ),
@@ -297,8 +303,6 @@ class backContainer extends StatelessWidget {
     );
   }
 }
-
-
  //        ListView.builder(
                     //           itemCount: sessions.length,
                     //           itemBuilder: (context, index) {
