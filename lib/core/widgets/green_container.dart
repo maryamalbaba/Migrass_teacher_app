@@ -40,45 +40,50 @@ class greenContainer extends StatelessWidget {
                 ),
               ],
             ),
-            child: Padding(
-              padding: EdgeInsets.all(8.w),
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Align(
-                    alignment: Alignment.topRight,
-                    child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Align(
+                  alignment: Alignment.topRight,
+                  child: Center(
+                    child: Flexible(
                       child: Text(
                         "2025-6-6",
-                        style: TextStyle(color: white, fontSize: 12.sp),
+                        style: TextStyle(color: white, fontSize: 12,overflow: TextOverflow.ellipsis),
+                      
                       ),
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.bottomRight,
-                    child: Padding(
-                      padding: EdgeInsets.all(7.w),
+                ),
+                Align(
+                  alignment: Alignment.bottomRight,
+                  child: Padding(
+                    padding: EdgeInsets.all(7.w),
+                    child: Flexible(
                       child: Text(
                         name,
                         style: TextStyle(
                           color: white,
                           fontWeight: FontWeight.bold,
-                          fontSize: 14.sp,
+                          fontSize: 14,
+                          overflow: TextOverflow.ellipsis
                         ),
                       ),
                     ),
                   ),
-                  Align(
-                    alignment: Alignment.bottomLeft,
+                ),
+                Align(
+                  alignment: Alignment.bottomLeft,
+                  child: Flexible(
                     child: Image.asset(
                       ImagesManager.tower,
-                      height: 66.h,
+                      height: 62.h,
                       fit: BoxFit.contain,
                     ),
                   ),
-                ],
-              ),
+                ),
+              ],
             ),
           ),
         ),

@@ -29,7 +29,8 @@ class ShowStudentUi extends StatelessWidget {
         ..add(ShowStudentevent(id: circleId)),
       child: Scaffold(
         appBar: AppBar(
-          title: const Text('قائمة الطلاب'),
+          centerTitle:  true,
+          title: Text("الطلاب",style: TextStyle(fontSize: 15,fontWeight: FontWeight.w600),),
           leading: IconButton(onPressed: (){
             AppNavigator.instance.pop();
           }, icon: Icon(Icons.arrow_back)),

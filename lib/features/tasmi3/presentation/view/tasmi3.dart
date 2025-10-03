@@ -59,65 +59,68 @@ class _tasmi3UIState extends State<tasmi3UI> {
               child: Column(
                 children: [
                   SafeArea(
-                    child: Stack(children: [
-                      Row(
-                        children: [
-                          Expanded(child: SizedBox()),
-                          Align(
-                            alignment: Alignment.bottomLeft,
-                            child: Image.asset(
-                              width: MediaQuery.of(context).size.width * 0.5,
-                              ImagesManager.moon,
-                              fit: BoxFit.cover,
+                    child: Container(
+                      height: MediaQuery.of(context).size.height*0.3,
+                      child: Stack(children: [
+                        Row(
+                          children: [
+                            Expanded(child: SizedBox()),
+                            Align(
+                              alignment: Alignment.bottomLeft,
+                              child: Image.asset(
+                                width: MediaQuery.of(context).size.width * 0.5,
+                                ImagesManager.moon,
+                                fit: BoxFit.cover,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                      Positioned(
-                        bottom: 6,
-                        right: 7,
-                        left: 16,
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.horizontal,
-                          child: Container(
-                            width: 200,
-                            child: Row(
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                MovingContainer(
-                                    ontap: () {
-                                      setState(() {
-                                        if (currentIndex <
-                                            succeslist.length - 1)
-                                          currentIndex++;
-                                      });
-                                    },
-                                    iconData:
-                                        Icon(color: white, Icons.arrow_back)),
-                                SizedBox(width: 8),
-                                Flexible(
-                                  child: Text(
-                                    currentGroup.type,
-                                    textAlign: TextAlign.center,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(fontSize: 12),
+                          ],
+                        ),
+                        Positioned(
+                          bottom: 6,
+                          right: 7,
+                          left: 16,
+                          child: SingleChildScrollView(
+                            scrollDirection: Axis.horizontal,
+                            child: Container(
+                              width: 200,
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  MovingContainer(
+                                      ontap: () {
+                                        setState(() {
+                                          if (currentIndex <
+                                              succeslist.length - 1)
+                                            currentIndex++;
+                                        });
+                                      },
+                                      iconData:
+                                          Icon(color: white, Icons.arrow_back)),
+                                  SizedBox(width: 8),
+                                  Flexible(
+                                    child: Text(
+                                      currentGroup.type,
+                                      textAlign: TextAlign.center,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(fontSize: 12),
+                                    ),
                                   ),
-                                ),
-                                SizedBox(width: 8),
-                                MovingContainer(
-                                    ontap: () {
-                                      setState(() {
-                                        if (currentIndex > 0) currentIndex--;
-                                      });
-                                    },
-                                    iconData: Icon(
-                                        color: white, Icons.arrow_forward)),
-                              ],
+                                  SizedBox(width: 8),
+                                  MovingContainer(
+                                      ontap: () {
+                                        setState(() {
+                                          if (currentIndex > 0) currentIndex--;
+                                        });
+                                      },
+                                      iconData: Icon(
+                                          color: white, Icons.arrow_forward)),
+                                ],
+                              ),
                             ),
                           ),
                         ),
-                      ),
-                    ]),
+                      ]),
+                    ),
                   ),
                   Expanded(
                     child: Container(
@@ -133,13 +136,13 @@ class _tasmi3UIState extends State<tasmi3UI> {
                           ? Center(child: Text("لا يوجد حلقات لك هنا"))
                           : GridView.builder(
                               shrinkWrap: true,
-                              physics: NeverScrollableScrollPhysics(),
-                              gridDelegate:
-                                  SliverGridDelegateWithFixedCrossAxisCount(
-                                crossAxisCount: 2,
-                                crossAxisSpacing: 8,
-                                mainAxisSpacing: 8,
-                              ),
+                             
+                              gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+  maxCrossAxisExtent: 250, // أقصى عرض للعنصر الواحد
+  crossAxisSpacing: 12,
+  mainAxisSpacing: 12,
+  childAspectRatio: 1 / 1, // النسبة بين العرض والارتفاع
+),
                               itemCount: currentCircles.length,
                               itemBuilder: (context, index2) {
                                 return SizedBox(

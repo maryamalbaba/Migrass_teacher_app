@@ -28,17 +28,41 @@ class Homepage extends StatelessWidget {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
+    final screenWidth = MediaQuery.of(context).size.width;
     return BlocProvider(
       create: (context) => LessonBloc(sl())..add(FetchLesson()),
       child: Scaffold(
+         extendBodyBehindAppBar: true, // يجعل الـ body تمتد خلف AppBar
+        appBar: AppBar(
+  backgroundColor: Colors.transparent, // الشفافية الكاملة
+  elevation: 0, // إزالة الظل الافتراضي
+  shadowColor: Colors.transparent, // إزالة أي ظل افتراضي
+  leading: SizedBox(), // إذا أردت إخفاء أي أيقونات قياسية
+  actions: [
+    Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: _buildIcon(Icons.menu, onTap: () {
+        AppNavigator.instance.push(name: RouteConst.drawer);
+      }),
+    ),
+   
+    Padding(
+      padding: const EdgeInsets.all(8.0),
+      child: _buildIcon(Icons.emoji_events, onTap: () {
+        _openWebsite("https://teacherchallenges-40c16.web.app");
+      }),
+    ),
+  ],
+),
+
         body: SingleChildScrollView(
           child: Column(
             children: [
+              // Header container with fixed height — Row is direct child
               Container(
-                height: 280,
+                height: 200,
                 padding: EdgeInsets.all(20),
                 decoration: BoxDecoration(
                   image: DecorationImage(
@@ -47,107 +71,79 @@ class Homepage extends StatelessWidget {
                   ),
                 ),
                 width: double.infinity,
-                child: Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 40.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          _buildIcon(Icons.person),
-                          SizedBox(width: 10),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Row(
-                                children: [
-                                  Text(
-                                  SharedPreferencesManger.instance.getString(SharedPreferencesKeys.firstName)??'',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                      color: Colors.white,
-                                    ),
+                child: Row(
+  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+  crossAxisAlignment: CrossAxisAlignment.center,
+  children: [
+    Expanded(
+      child: Row(
+        children: [
+          _buildIcon(Icons.person),
+          SizedBox(width: 10),
+          Expanded(
+            child: Text(
+              '${SharedPreferencesManger.instance.getString(SharedPreferencesKeys.firstName) ?? ''} '
+              '${SharedPreferencesManger.instance.getString(SharedPreferencesKeys.lastName) ?? ''}',
+              overflow: TextOverflow.ellipsis,
+              maxLines: 1,
+              style: const TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: Colors.white,
+              ),
+            ),
+          ),
+        ],
+      ),
+    ),
 
-                                  ),
-                                  SizedBox(width: 3,),
-                                  Text(
-                                   SharedPreferencesManger.instance.getString(SharedPreferencesKeys.lastName)??'',
-                                    style: TextStyle(
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 16,
-                                      color: Colors.white,
-                                    ),
-
-                                  ),
-                                ],
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                      // Left side icons
-                      Row(
-                        children: [
-                          _buildIcon(Icons.menu,onTap: (){
-                            AppNavigator.instance.push(name: RouteConst.drawer);
-                          }),
-                          SizedBox(width: 10),
-                          _buildIcon(Icons.emoji_events,onTap: (){
-                            _openWebsite("https://teacherchallenges-40c16.web.app");
-                          }),
-                          // example for trophy/award icon
-                        ],
-                      ),
-                      // Right side profile info
-                    ],
-                  ),
+                    
+                    // Row(
+                    //   children: [
+                     
+                    //   ],
+                    // ),
+                  ],
                 ),
               ),
 
+              // BlocBuilder and GridView (kept as requested; children wrapped to have bounded size)
               BlocBuilder<LessonBloc, LessonState>(
                 builder: (context, state) {
                   if (state.fetchLessonStatus == ControllerStatus.loading) {
                     return const Center(child: CircularProgressIndicator());
-                  } else if (state.fetchLessonStatus ==
-                      ControllerStatus.error) {
+                  } else if (state.fetchLessonStatus == ControllerStatus.error) {
                     return Center(child: Text(state.message));
-                  } else if (state.fetchLessonStatus ==
-                      ControllerStatus.loaded) {
+                  } else if (state.fetchLessonStatus == ControllerStatus.loaded) {
                     return state.circles.isEmpty
                         ? Center(child: Text("لا يوجد حلقات لك هنا"))
                         : GridView.builder(
-                            padding: EdgeInsets.zero,
                             shrinkWrap: true,
-                            physics: NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
-                              crossAxisSpacing: 8,
-                              childAspectRatio: 1.2,
-                              mainAxisSpacing: 8,
+                            physics: const NeverScrollableScrollPhysics(),
+                            gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 250,
+                              crossAxisSpacing: 12,
+                              mainAxisSpacing: 12,
+                              childAspectRatio: 1 / 1,
                             ),
                             itemCount: state.circles.length,
                             itemBuilder: (context, index) {
+                              // Wrap the greenContainer with a bounded box to ensure InkWell / pointer listeners have constraints
                               return InkWell(
                                 onTap: () {
                                   AppNavigator.instance.push(
-                                      name: RouteConst.session,
-                                      extra: state.circles[index].id);
+                                    name: RouteConst.session,
+                                    extra: state.circles[index].id,
+                                  );
                                 },
-                                child: SizedBox(
-                                  width: 100,
-                                  height: 130,
+                                child: SizedBox.expand(
                                   child: greenContainer(
                                     name: state.circles[index].name,
                                     onTap: () {
                                       showCircleDialog(
                                         context,
                                         state.circles[index].name,
-                                        state.circles[index]
-                                            .students, // List<String>
+                                        state.circles[index].students,
                                       );
                                     },
                                   ),
@@ -183,8 +179,8 @@ class Homepage extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Container(
-                    padding: const EdgeInsets.symmetric(
-                        horizontal: 16, vertical: 12),
+                    padding:
+                        const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
                     decoration: BoxDecoration(
                       color: lightGreen1,
                       borderRadius: BorderRadius.circular(10),
@@ -192,8 +188,7 @@ class Homepage extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        const Icon(Icons.menu_book_outlined,
-                            color: Colors.grey),
+                        const Icon(Icons.menu_book_outlined, color: Colors.grey),
                         const SizedBox(width: 14),
                         Text(
                           circleName,
@@ -210,7 +205,6 @@ class Homepage extends StatelessWidget {
                   ),
                   const SizedBox(height: 10),
                   Expanded(
-                    // Wrap ListView.builder with Expanded to constrain its height
                     child: ListView.builder(
                       itemCount: students.length,
                       itemBuilder: (context, index) {
@@ -249,7 +243,7 @@ class Homepage extends StatelessWidget {
 
   Widget _buildIcon(IconData icon, {VoidCallback? onTap}) {
     return InkWell(
-      onTap: onTap, // هنا تمرير التابع
+      onTap: onTap,
       child: Container(
         padding: EdgeInsets.all(8),
         decoration: BoxDecoration(
@@ -260,5 +254,4 @@ class Homepage extends StatelessWidget {
       ),
     );
   }
-
 }

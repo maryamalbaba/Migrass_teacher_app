@@ -77,7 +77,7 @@ class _Tasmi3StudentInputUiState extends State<Tasmi3StudentInputUi> {
                 children: [
                   Container(
                     width: double.infinity,
-                    height: 200,
+                    height: 100,
                     decoration: const BoxDecoration(),
                   ),
                   Expanded(
@@ -103,132 +103,184 @@ class _Tasmi3StudentInputUiState extends State<Tasmi3StudentInputUi> {
                             ),
                             const SizedBox(height: 8),
                             Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                // Dropdown للسورة الأولى
-                                BlocBuilder<SuraBloc, SuraState>(
-                                  builder: (context, state) {
-                                    if (state is GetSuraSucess) {
-                                      return DropdownButton<SuraModel>(
-                                        value: selectedSura1,
-                                        items: state.l
-                                            .map((sura) => DropdownMenuItem(
-                                                  value: sura,
-                                                  child: Text(sura.name),
-                                                ))
-                                            .toList(),
-                                        onChanged: (value) {
-                                          setState(() {
-                                            selectedSura1 = value;
-                                            selectedAya1 =
-                                                null; // نرجع نفضي الآية عند تغيير السورة
-                                          });
-                                        },
-                                      );
-                                    } else {
-                                      return const Text("خطأ في السور");
-                                    }
-                                  },
+                                Flexible(
+                                  flex: 1,
+                                  child: Text("من", textAlign: TextAlign.right),
                                 ),
-                                const Text("من آية"),
-                                // Dropdown لآيات السورة الأولى
-                                BlocBuilder<SuraBloc, SuraState>(
-                                  builder: (context, state) {
-                                    if (state is GetSuraSucess &&
-                                        selectedSura1 != null) {
-                                      // جيب السورة المختارة
-                                      final sura = selectedSura1!;
-
-                                      // اعمل ليست من 1 الى عدد آيات السورة
-                                      final ayaList = List.generate(
-                                        sura.ayat_counts.toInt(),
-                                        (index) => (index + 1).toString(),
-                                      );
-
-                                      return DropdownButton<String>(
-                                        value: selectedAya1,
-                                        items: ayaList
-                                            .map((aya) => DropdownMenuItem(
-                                                  value: aya,
-                                                  child: Text(aya),
-                                                ))
-                                            .toList(),
-                                        onChanged: (value) {
-                                          setState(() {
-                                            selectedAya1 = value;
-                                          });
-                                        },
-                                      );
-                                    } else {
-                                      return const Text("اختر سورة ");
-                                    }
-                                  },
+                                const SizedBox(width: 8),
+                                Flexible(
+                                  flex: 2,
+                                  child: BlocBuilder<SuraBloc, SuraState>(
+                                    builder: (context, state) {
+                                      if (state is GetSuraSucess) {
+                                        return Directionality(
+                                          textDirection: TextDirection.ltr,
+                                          child: DropdownButton<SuraModel>(
+                                            isExpanded: true,
+                                            underline: const SizedBox(),
+                                            icon: const Icon(
+                                                Icons.arrow_drop_down),
+                                            iconEnabledColor:
+                                                const Color.fromARGB(
+                                                    255, 112, 190, 144),
+                                            value: selectedSura1,
+                                            items: state.l
+                                                .map((sura) => DropdownMenuItem(
+                                                      value: sura,
+                                                      child: Text(sura.name),
+                                                    ))
+                                                .toList(),
+                                            onChanged: (value) {
+                                              setState(() {
+                                                selectedSura1 = value;
+                                                selectedAya1 = null;
+                                              });
+                                            },
+                                          ),
+                                        );
+                                      } else {
+                                        return Center(
+                                            child:
+                                                const animation_circular_progress());
+                                      }
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(width: 15),
+                                Flexible(
+                                  flex: 1,
+                                  child: Text("من آية",
+                                      textAlign: TextAlign.right),
+                                ),
+                                const SizedBox(width: 8),
+                                Flexible(
+                                  flex: 1,
+                                  child: BlocBuilder<SuraBloc, SuraState>(
+                                    builder: (context, state) {
+                                      if (state is GetSuraSucess &&
+                                          selectedSura1 != null) {
+                                        final ayaList = List.generate(
+                                          selectedSura1!.ayat_counts.toInt(),
+                                          (index) => (index + 1).toString(),
+                                        );
+                                        return Directionality(
+                                          textDirection: TextDirection.ltr,
+                                          child: DropdownButton<String>(
+                                            isExpanded: true,
+                                            underline: const SizedBox(),
+                                            value: selectedAya1,
+                                            items: ayaList
+                                                .map((aya) => DropdownMenuItem(
+                                                      value: aya,
+                                                      child: Text(aya),
+                                                    ))
+                                                .toList(),
+                                            onChanged: (value) {
+                                              setState(() {
+                                                selectedAya1 = value;
+                                              });
+                                            },
+                                          ),
+                                        );
+                                      } else {
+                                        return const Text("آية");
+                                      }
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
-                            const SizedBox(height: 8),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            const SizedBox(height: 18),
+                                 Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                                // Dropdown للسورة الثانية
-                                BlocBuilder<SuraBloc, SuraState>(
-                                  builder: (context, state) {
-                                    if (state is GetSuraSucess) {
-                                      return DropdownButton<SuraModel>(
-                                        value: selectedSura2,
-                                        items: state.l
-                                            .map((sura) => DropdownMenuItem(
-                                                  value: sura,
-                                                  child: Text(sura.name),
-                                                ))
-                                            .toList(),
-                                        onChanged: (value) {
-                                          setState(() {
-                                            selectedSura2 = value;
-                                            selectedAya2 =
-                                                null; // نرجع نفضي الآية عند تغيير السورة
-                                          });
-                                        },
-                                      );
-                                    } else {
-                                      return const Text("خطأ في السور");
-                                    }
-                                  },
+                                Flexible(
+                                  flex: 1,
+                                  child:
+                                      Text("إلى", textAlign: TextAlign.right),
                                 ),
-                                const Text("إلى آية"),
-                                // Dropdown لآيات السورة الثانية
-                                BlocBuilder<SuraBloc, SuraState>(
-                                  builder: (context, state) {
-                                    if (state is GetSuraSucess &&
-                                        selectedSura2 != null) {
-                                      final sura = selectedSura2!;
-
-                                      final ayaList = List.generate(
-                                        sura.ayat_counts.toInt(),
-                                        (index) => (index + 1).toString(),
-                                      );
-
-                                      return DropdownButton<String>(
-                                        value: selectedAya2,
-                                        items: ayaList
-                                            .map((aya) => DropdownMenuItem(
-                                                  value: aya,
-                                                  child: Text(aya),
-                                                ))
-                                            .toList(),
-                                        onChanged: (value) {
-                                          setState(() {
-                                            selectedAya2 = value;
-                                          });
-                                        },
-                                      );
-                                    } else {
-                                      return const Text(
-                                        "اختر سورة ",
-                                        overflow: TextOverflow.fade,
-                                      );
-                                    }
-                                  },
+                                const SizedBox(width: 8),
+                                Flexible(
+                                  flex: 2,
+                                  child: BlocBuilder<SuraBloc, SuraState>(
+                                    builder: (context, state) {
+                                      if (state is GetSuraSucess) {
+                                        return Directionality(
+                                          textDirection: TextDirection.ltr,
+                                          child: DropdownButton<SuraModel>(
+                                            isExpanded: true,
+                                            underline: const SizedBox(),
+                                            icon: const Icon(
+                                                Icons.arrow_drop_down),
+                                            iconEnabledColor:
+                                                const Color.fromARGB(
+                                                    255, 112, 190, 144),
+                                            value: selectedSura2,
+                                            items: state.l
+                                                .map((sura) => DropdownMenuItem(
+                                                      value: sura,
+                                                      child: Text(sura.name),
+                                                    ))
+                                                .toList(),
+                                            onChanged: (value) {
+                                              setState(() {
+                                                selectedSura2 = value;
+                                                selectedAya2 = null;
+                                              });
+                                            },
+                                          ),
+                                        );
+                                      } else {
+                                        return Center(
+                                            child:
+                                                const animation_circular_progress());
+                                      }
+                                    },
+                                  ),
+                                ),
+                                const SizedBox(width: 15),
+                                Flexible(
+                                  flex: 1,
+                                  child: Text("إلى آية",
+                                      textAlign: TextAlign.right),
+                                ),
+                                const SizedBox(width: 8),
+                                Flexible(
+                                  flex: 1,
+                                  child: BlocBuilder<SuraBloc, SuraState>(
+                                    builder: (context, state) {
+                                      if (state is GetSuraSucess &&
+                                          selectedSura2 != null) {
+                                        final ayaList = List.generate(
+                                          selectedSura2!.ayat_counts.toInt(),
+                                          (index) => (index + 1).toString(),
+                                        );
+                                        return Directionality(
+                                          textDirection: TextDirection.ltr,
+                                          child: DropdownButton<String>(
+                                            isExpanded: true,
+                                            underline: const SizedBox(),
+                                            value: selectedAya2,
+                                            items: ayaList
+                                                .map((aya) => DropdownMenuItem(
+                                                      value: aya,
+                                                      child: Text(aya),
+                                                    ))
+                                                .toList(),
+                                            onChanged: (value) {
+                                              setState(() {
+                                                selectedAya2 = value;
+                                              });
+                                            },
+                                          ),
+                                        );
+                                      } else {
+                                        return const Text("آية");
+                                      }
+                                    },
+                                  ),
                                 ),
                               ],
                             ),
@@ -255,12 +307,15 @@ class _Tasmi3StudentInputUiState extends State<Tasmi3StudentInputUi> {
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(content: Text(" يتم الارسال ")),
                                   );
-                                } else {
+                                } else if (state is SendTasmi3Error) {
                                   ScaffoldMessenger.of(context).showSnackBar(
-                                    SnackBar(
-                                        content: Text(
-                                            " حصل خطأ ..انتبه على ترتيب السور والايات")),
+                                    SnackBar(content: Text(state.message)),
                                   );
+                                } else {
+                                  ScaffoldMessenger.of(context)
+                                      .showSnackBar(SnackBar(
+                                    content: Text("حصل خطأ "),
+                                  ));
                                 }
                               },
                               child: ElevatedButton(
@@ -269,7 +324,8 @@ class _Tasmi3StudentInputUiState extends State<Tasmi3StudentInputUi> {
                                   shape: RoundedRectangleBorder(
                                     borderRadius: BorderRadius.circular(20),
                                   ),
-                                  minimumSize: const Size(double.infinity, 45),
+                                  maximumSize: const Size(300, 45),
+                                  minimumSize: const Size(100, 45),
                                 ),
                                 onPressed: () {
                                   if (selectedSura1 != null &&
@@ -312,6 +368,27 @@ class _Tasmi3StudentInputUiState extends State<Tasmi3StudentInputUi> {
             ),
           );
         },
+      ),
+    );
+  }
+}
+
+class animation_circular_progress extends StatelessWidget {
+  const animation_circular_progress({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      height: 15,
+      width: 11,
+      child: const CircularProgressIndicator.adaptive(
+        backgroundColor: Color.fromARGB(255, 169, 196, 180),
+        strokeWidth: 1.5,
+        valueColor: AlwaysStoppedAnimation<Color>(
+          Color.fromARGB(255, 112, 190, 133), // لون الدوران
+        ),
       ),
     );
   }

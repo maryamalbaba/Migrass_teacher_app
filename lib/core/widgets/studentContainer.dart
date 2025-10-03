@@ -1,8 +1,5 @@
 import 'package:flutter/material.dart';
-
-
-
-
+import 'package:teacher/core/resource/colors_manager.dart';
 
 class PlantCard extends StatelessWidget {
   final String name;
@@ -17,60 +14,81 @@ class PlantCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+      padding: const EdgeInsets.symmetric(
+        horizontal: 12,
+      ),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
-          colors: [Color(0xFFE3FCD8), Color(0xFFFFF6D9)], 
-        ),
+            end: Alignment.topRight,
+            begin: Alignment.bottomLeft,
+            colors: [
+              Color(0xffFFF7B8),
+              Color(0xffDAE7DA),
+              Color(0xFFB5DDC0),
+            ]),
         borderRadius: BorderRadius.circular(16),
         boxShadow: [
           BoxShadow(
-            color: Colors.grey.withOpacity(0.2),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
+            color: Colors.black.withOpacity(0.25),
+            blurRadius: 8,
+            spreadRadius: 1,
+            offset: Offset(0, 4), //
           ),
         ],
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          
-          Image.asset(
-            "assets/images/plant.png", 
-            width: 32,
-            height: 32,
-          ),
-
-        
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 8.0),
-              child: Text(
-                name,
-                style: const TextStyle(
-                  color: Colors.green,
-                  fontWeight: FontWeight.w600,
-                  fontSize: 16,
+          Column(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Flexible(
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      
+                      name,
+                      style: const TextStyle(
+                        color: white,
+                        fontWeight: FontWeight.w600,
+                        shadows: [
+                          Shadow(
+                            color: black,
+                            offset: Offset(0, 3), //
+                            blurRadius: 10,
+                          )
+                        ],
+                        fontSize: 16,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
                 ),
-                overflow: TextOverflow.ellipsis,
               ),
-            ),
+              ElevatedButton.icon(
+                onPressed: onView,
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.white,
+                  foregroundColor: Color.fromARGB(255, 210, 237, 198),
+                  elevation: 2,
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                ),
+                icon: const Icon(Icons.play_arrow),
+                label: const Text("عرض"),
+              ),
+            ],
           ),
-
-       
-          ElevatedButton.icon(
-            onPressed: onView,
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.white,
-              foregroundColor: Colors.green,
-              elevation: 2,
-              padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(12),
-              ),
-            ),
-            icon: const Icon(Icons.play_arrow),
-            label: const Text("عرض"),
+          Image.asset(
+            "assets/images/plant.png",
+            width: 100,
+            height: 100,
           ),
         ],
       ),

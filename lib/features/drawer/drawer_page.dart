@@ -49,11 +49,11 @@ class DrawerPage extends StatelessWidget {
               },
             ),
             const SizedBox(height: 16),
-            MenuPill(
-              title: 'احصائيات الطلبة',
-              icon: Icons.stacked_bar_chart_outlined,
-              onTap: () {},
-            ),
+            // MenuPill(
+            //   title: 'احصائيات الطلبة',
+            //   icon: Icons.stacked_bar_chart_outlined,
+            //   onTap: () {},
+            // ),
             const SizedBox(height: 16),
             MenuPill(
               title: 'ادخال علامات الطلبة',
@@ -63,11 +63,11 @@ class DrawerPage extends StatelessWidget {
               },
             ),
             const SizedBox(height: 16),
-            MenuPill(
-              title: 'شارك التطبيق',
-              icon: Icons.reply, // السهم للخلف
-              onTap: () {},
-            ),
+            // MenuPill(
+            //   title: 'شارك التطبيق',
+            //   icon: Icons.reply, // السهم للخلف
+            //   onTap: () {},
+            // ),
             const SizedBox(height: 16),
             MenuPill(
               title: 'تسجيل خروج ',
@@ -122,15 +122,19 @@ class MenuPill extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.start,
                   children: [
                     const SizedBox(width: 12),
-                    Icon(icon, size: 28, color: const Color(0xFF6D6D6D)),
+                    Icon(icon, size: 25, color: const Color(0xFF6D6D6D)),
                     const SizedBox(width: 12),
-                    Text(
-                      title,
-                      textAlign: TextAlign.right,
-                      style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w400,
-                        color: Color(0xFF4A4A4A),
+                    Expanded(
+                      child: Text(
+                        title,
+                        textAlign: TextAlign.right,
+                         maxLines: 1,
+                        style: const TextStyle(
+                          fontSize: 15,
+                          fontWeight: FontWeight.w400,
+                          color: Color(0xFF4A4A4A),
+                          overflow: TextOverflow.ellipsis
+                        ),
                       ),
                     ),
                   ],

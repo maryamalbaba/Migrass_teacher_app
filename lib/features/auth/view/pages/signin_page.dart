@@ -65,23 +65,25 @@ class _SignInPageState extends State<SignInPage> {
                 }
               },
               builder: (context, state) {
-                return Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    buildTextField(
-                      hintText: StringManager.myCode,
-                      icon: Icons.lock,
-                      controller: _myCodeController,
-                    ),
-                    SizedBox(height: 20),
-                    buildTextField(
-                      hintText: StringManager.groupCode,
-                      icon: Icons.person,
-                      controller: _mosqueCodeController,
-                    ),
-                    SizedBox(height: 230),
-                    buildElevatedButton(context, state),
-                  ],
+                return SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      buildTextField(
+                        hintText: StringManager.myCode,
+                        icon: Icons.lock,
+                        controller: _myCodeController,
+                      ),
+                      SizedBox(height: 20),
+                      buildTextField(
+                        hintText: StringManager.groupCode,
+                        icon: Icons.person,
+                        controller: _mosqueCodeController,
+                      ),
+                      SizedBox(height: 230),
+                      buildElevatedButton(context, state),
+                    ],
+                  ),
                 );
               },
             ),
